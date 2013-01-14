@@ -178,11 +178,14 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  If something went wrong, call this to get the last error. Consequently, clears
 	  the last error.<br><br>
 
-   15. pointer\_stack_license
+   16. pointer\_stack_license
 
 	  Obtains a char * to the license associated with this library for display at the
 	  user's request, or developer's behest.<br><br>
 
+   17. pointer\_stack\_create
+
+	  Creates a new empty pointer stack.<br><br>
 
 Notes
 
