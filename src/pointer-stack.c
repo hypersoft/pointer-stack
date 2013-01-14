@@ -104,6 +104,11 @@ unsigned long pointer_stack_get_count(PointerStack * stack) {
 	return stack->count;
 }
 
+/* get the private data associated with a PointerStack */
+void * pointer_stack_get_private(PointerStack * stack) {
+	return stack->private;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
