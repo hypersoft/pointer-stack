@@ -156,7 +156,7 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  Called to initialize the API, one must provide allocator, deallocator, and
 	  reallocator procedures. The prototype of these procedures must follow the C
 	  standard. If this procedure is not called, the C standard is used for each
-	  procedure. This procedure may not be called after a any data has been
+	  procedure. This procedure may not be called after any dynamic data has been
 	  allocated until such time that no data provided by allocator are allocated.<br><br>
 
    12. pointer\_stack\_auto_pack
