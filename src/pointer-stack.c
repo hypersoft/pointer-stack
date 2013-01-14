@@ -88,8 +88,15 @@ void pointer_stack_invert(PointerStack * stack, bool status) {
 }
 
 /* decrement the reference counted lock on a PointerStack */
-void pointer_stack_unlock(PointerStack * stack) {
+bool pointer_stack_unlock(PointerStack * stack) {
 	stack->lock--;
+	return ( ! stack->lock);
+}
+
+/* increment the reference counted lock on a PointerStack */
+bool pointer_stack_lock(PointerStack * stack) {
+	stack->lock++;
+	return true;
 }
 
 /* This is not a thread safe operation. Avoid use wherever possible */
