@@ -65,10 +65,12 @@ void pointer_stack_set_buffering(PointerStack * stack, unsigned long value) {
 	stack->buffer = value;
 }
 
-/* deallocate storage */
+/* deallocate random storage */
 void pointer_stack_free(void * data) {
-	deallocate(data);
-	stacks--;
+	if (data) {
+		deallocate(data);
+		stacks--;
+	}
 }
 
 /* control index inversion on a PointerStack */
@@ -133,10 +135,17 @@ void * pointer_stack_peek(PointerStack * stack, unsigned long index) {
 
 /* Create a new PointerStack */
 PointerStack * pointer_stack_create(void) {
-	stacks++;
 	void * result = allocate(sizeof(PointerStack));
-	memset(result, 0, sizeof(PointerStack));
+	if (result) { memset(result, 0, sizeof(PointerStack)); stacks++; }
+	result->buffer = 8;
 	return result;
+}
+
+/* Destroy a PointerStack */
+bool pointer_stack_dispose(PointerStack * stack) {
+	if (stack->lock || ! stack) return false;
+	deallocate(stack); stacks--;
+	return true;
 }
 
 /* This is not a thread safe operation. Avoid use wherever possible */

@@ -76,3 +76,7 @@ extern void * pointer_stack_peek(PointerStack, unsigned long);
 /* Create a new PointerStack */
 PointerStack pointer_stack_create(void);
 
+/* Destroy a PointerStack */
+bool pointer_stack_dispose(PointerStack);
+
+
