@@ -137,6 +137,11 @@ void * pointer_stack_poke(PointerStack * stack, unsigned long index, void * inse
 	return result;
 }
 
+/* Examine a value in a PointerStack */
+void * pointer_stack_peek(PointerStack * stack, unsigned long index) {
+	return stack->item[index];
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
