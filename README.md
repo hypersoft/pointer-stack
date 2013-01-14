@@ -157,7 +157,8 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  reallocator procedures. The prototype of these procedures must follow the C
 	  standard. If this procedure is not called, the C standard is used for each
 	  procedure. This procedure may not be called after any dynamic data has been
-	  allocated until such time that no data provided by allocator are allocated.<br><br>
+	  allocated until such time that no data provided by the allocator are allocated.
+	  <br><br>
 
    12. pointer\_stack\_auto_pack
 
