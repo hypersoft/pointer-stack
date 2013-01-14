@@ -82,6 +82,11 @@ void pointer_stack_free(void * data) {
 	deallocate(data);
 }
 
+/* control index inversion on a PointerStack */
+void pointer_stack_invert(PointerStack * stack, bool status) {
+	stack->inverted = status;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
