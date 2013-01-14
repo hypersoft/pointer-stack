@@ -214,6 +214,13 @@ Notes
   "Shoot your eye out kid". Recommendation: adjust for richochet, shoot straight, and 
   laugh triumphantly in the face of fear.
 
+* The logical allocation unit/alignment for a platform, (theorhetically), should be
+  the same size as a pointer. This means a pointer stack, in the hands of a master
+  craftsman can be used to allocate machine correct, overflow free
+  [multi-byte-plexable](http://en.wikipedia.org/wiki/Multiplexer),
+  [pipeline surfing](http://en.wikipedia.org/wiki/Instruction_level_parallelism)
+  buffers. Not something we would do, just a fun fact one should know.
+
 ><hr>
 
 
