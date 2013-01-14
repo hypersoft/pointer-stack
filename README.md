@@ -65,6 +65,10 @@ letter 'P'.
 	  re-use of data is favorably unlikely, one may issue a "pack" on a PointerStack,
 	  to make the unused data available to other operations.<br><br>
 
+   6. pointer\_stack_pointer
+
+	  If you need a pointer to a pointer on the stack, this is your man.<br><br>
+
 ><hr>
 
 #### Limitations
