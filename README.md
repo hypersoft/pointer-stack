@@ -140,6 +140,10 @@ limited, lock/unlock, essentially "do nothing", unless the, stack becomes,
 
 	  Always decrements the lock reference count by 1.<br><br>
 
+   00. pointer\_stack\_get_lock
+
+	  Always returns the lock reference count.<br><br>
+
 ><hr>
 
 #### Optimization

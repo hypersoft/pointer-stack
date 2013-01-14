@@ -81,7 +81,7 @@ void pointer_stack_invert(PointerStack * stack, bool status) {
 
 /* decrement the reference counted lock on a PointerStack */
 bool pointer_stack_unlock(PointerStack * stack) {
-	stack->lock--;
+	if (stack->lock) stack->lock--;
 	return ( ! stack->lock);
 }
 
@@ -89,6 +89,11 @@ bool pointer_stack_unlock(PointerStack * stack) {
 bool pointer_stack_lock(PointerStack * stack) {
 	stack->lock++;
 	return true;
+}
+
+/* Get the reference count (locks) on a PointerStack */
+unsigned long pointer_stack_get_lock(PointerStack * stack) {
+	return stack->lock;
 }
 
 /* get the count of elements in a PointerStack */

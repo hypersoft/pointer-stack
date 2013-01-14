@@ -49,6 +49,9 @@ extern bool pointer_stack_unlock(PointerStack);
 /* increment the reference counted lock on a PointerStack */
 extern bool pointer_stack_lock(PointerStack);
 
+/* Get the reference count (locks) on a PointerStack */
+unsigned long pointer_stack_get_lock(PointerStack * stack)
+
 /* get the count of elements in a PointerStack */
 extern unsigned long pointer_stack_get_count(PointerStack);
 
