@@ -84,7 +84,7 @@ letter 'P'.
 
    00. pointer\_stack_create
 
-	  Creates a new empty pointer stack.<br><br>
+	  Creates a new empty PointerStack.<br><br>
 
    00. pointer\_stack_free
 
@@ -205,9 +205,9 @@ Notes
 * Combinations of import, export, and void can be used to "slice", "join",
 "duplicate", "concatenate", or otherwise manipulate entire stacks.
 
-* Calling "free" on a pointer stack does not free private data, or any element data.
+* Calling "free" on a PointerStack does not free private data, or any element data.
 
-* The pointer stack API, does not recommend manipulating the actual stack pointer.
+* The PointerStack API, does not recommend manipulating the actual stack pointer.
   This is in the full interest of data integrity. You should use the operationally
   sane "export" if you need to manually modify data, or pass it along to something
   else. Using pointer\_stack_pointer, is a pretty good way to "Put your eye out kid".
