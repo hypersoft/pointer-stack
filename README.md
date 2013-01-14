@@ -5,7 +5,7 @@ A procedural library of methods (written in C) for managing stacks of pointers.
 
 #### Status
 
-   :pager: Active Development
+   :warning: Active Development
 
 ><hr>
 
@@ -214,4 +214,4 @@ Notes
 ><hr>
 
 
-<div align=center>           Points of Authority                              </div>
+<div align=center>          :zap: Points of Authority :zap:                     </div>
