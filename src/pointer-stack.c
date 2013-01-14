@@ -127,7 +127,14 @@ void pointer_stack_set_limit(PointerStack * stack, void * limit) {
 
 /* get the pointer to the pointer of an element in a PointerStack */
 void * pointer_stack_pointer(PointerStack * stack, unsigned long index) {
-	return stack->item[index];
+	return stack->item + index;
+}
+
+/* swap a value in a PointerStack out with new data */
+void * pointer_stack_poke(PointerStack * stack, unsigned long index, void * insert) {
+	void * result = stack->item[index];
+	stack->item[index] = insert;
+	return result;
 }
 
 /* This is not a thread safe operation. Avoid use wherever possible */
