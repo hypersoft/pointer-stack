@@ -15,7 +15,6 @@
 #include <string.h> /* memset */
 #endif
 
-
 static typedef void * ( * PointerStackAllocator  ) ( unsigned long );
 static typedef void   (   PointerStackDeallocator) ( void *        );
 
