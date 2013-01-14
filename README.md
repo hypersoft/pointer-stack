@@ -224,4 +224,4 @@ Notes
 ><hr>
 
 
-<center><h5>                  Points of Authority                       </h5></center>
+<span align=center>           Points of Authority                              </span>
