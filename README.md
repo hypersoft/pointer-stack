@@ -109,10 +109,11 @@ are provided.
 ><hr>
 
 #### Private Data
-From time to time, a stack may require an association of unmanaged data. Such as a 
-type descriptor, a procedural header, or anything related to the contents of the
-PointerStack, such as yet another PointerStack! For these cases, the following methods
-are provided.
+From time to time, a PointerStack may require an association of unmanaged data. Such
+as a type descriptor, a procedural header, or anything related to the contents of the
+PointerStack, such as
+[yet another PointerStack](http://en.wikipedia.org/wiki/Associative_array)! For these
+cases, the following methods are provided.
 
    00. pointer\_stack\_set_private
 
@@ -143,8 +144,9 @@ limited, lock/unlock, essentially "do nothing", unless the, stack becomes,
 
 #### Optimization
 Optimization takes place in the allocation and deallocation routines. Instead of,
-reallocating the "stack frame" for each "push" and "pop", space can be automatically 
-reserved or truncated by setting up a proper buffering scheme.
+reallocating the ["stack frame"](http://en.wikipedia.org/wiki/Stack_frame#Structure)
+for each "push" and "pop", space can be automatically reserved or truncated by setting
+up a proper buffering scheme.
 
    00. pointer\_stack\_set_buffering
 
@@ -175,7 +177,8 @@ reserved or truncated by setting up a proper buffering scheme.
 
    00. pointer\_stack_export
 
-	  Given a valid range of elements, export returns a "plain jane" newly allocated,
+	  Given a valid range of elements, export returns a
+	  ["plain jane"](http://en.wikipedia.org/wiki/Plain_Jane) newly allocated,
 	  zero terminated, array of pointers which must be freed.<br><br>
 
    00. pointer\_stack_import
@@ -200,7 +203,7 @@ reserved or truncated by setting up a proper buffering scheme.
 Notes
 
 * Combinations of import, export, and void can be used to "slice", "join",
-"duplicate", "concatenate", or otherwise manipulate entire PointerStacks.
+  "duplicate", "concatenate", or otherwise manipulate entire PointerStacks.
 
 * Calling "free" on a PointerStack does not free private data, or any element data.
 
