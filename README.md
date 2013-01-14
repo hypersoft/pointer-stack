@@ -37,23 +37,23 @@ or less "Code Hacker's Tools".
    1. pointer\_stack_push
 
 	  In order to have a stack, one must have a way to add things to the
-	  stack. "push" provides just such a method.
+	  stack. "push" provides just such a method.<br><br>
 
    2. pointer\_stack_pop
 
 	  The newest additions to the stack, are usually the first to go. "pop" provides,
-	  a way to "git rid" of the last piece added to the stack.
+	  a way to "git rid" of the last piece added to the stack.<br><br>
 
    3. pointer\_stack_peek
 
 	  Expectedly, having a stack isn't worth much if you can't "show off" the
 	  the individual pieces that make one stack whole. "peek" provides just
-	  such a method.
+	  such a method.<br><br>
 
    4. pointer\_stack_poke
 
 	  Who says "trading up" is pointless? "poke" provides a method to, trade one stack
-	  value with another.
+	  value with another.<br><br>
 
    5. pointer\_stack_pack
 
@@ -61,7 +61,7 @@ or less "Code Hacker's Tools".
 	  is what's commonly called a "memory leak", essentially, un-re-claimed data.
 	  Hypersoft PointerStacks are eager to re-use this data. In situations where
 	  re-use of data is favorably unlikely, one may issue a "pack" on a PointerStack,
-	  to make the unused data available to other operations.
+	  to make the unused data available to other operations.<br><br>
 
 ><hr>
 
@@ -72,7 +72,7 @@ are provided.
 
    1. pointer\_stack\_set_limit
 
-	  Truncates data, packs stack as well.
+	  Truncates data, packs stack as well.<br><br>
 
    2. pointer\_stack\_get_limit
 
@@ -85,7 +85,7 @@ as yet another PointerStack! For these cases, the following methods are provided
 
    1. pointer\_stack\_set_private
 
-	  Overwrites current if any.
+	  Overwrites current if any.<br><br>
 
    2. pointer\_stack\_get_private
 
@@ -95,7 +95,7 @@ as yet another PointerStack! For these cases, the following methods are provided
 
    01. pointer\_stack_elements
 
-	  Get the number of elements currently on the stack.
+	  Get the number of elements currently on the stack.<br><br>
 
    02. pointer\_stack_lock
 
@@ -103,41 +103,41 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  reference counted way to prevent the stack from growing and shrinking.
 	  Reallocation sometimes transfers the stack data to a new location. Whenever,
 	  a stack is limited, lock, essentially "does nothing", unless the, stack becomes,
-	  "unlimited".
+	  "unlimited".<br><br>
 
    03. pointer\_stack_unlock
 
-	  decrements the lock reference count by 1.
+	  decrements the lock reference count by 1.<br><br>
 
    04. pointer\_stack_reverse
 
-	  Physically, reverses the order of all elements.
+	  Physically, reverses the order of all elements.<br><br>
 
    05. pointer\_stack_invert
 
-	  Mathematically, reverses the order of all elements.
+	  Mathematically, reverses the order of all elements.<br><br>
 
    06. pointer\_stack_sort
 
-	  Sort the elements by their content address, least to greatest.
+	  Sort the elements by their content address, least to greatest.<br><br>
 
    07. pointer\_stack_export
 
 	  Given a valid range of elements, export returns a "plain jane" newly allocated,
-	  zero terminated, array of pointers which must be freed.
+	  zero terminated, array of pointers which must be freed.<br><br>
 
    08. pointer\_stack_import
 
 	  Given a zero terminated array of pointers, place each pointer on to the top of
-	  the stack.
+	  the stack.<br><br>
 
    09. pointer\_stack_void
 
-	  Unwind the stack index by a number of items.
+	  Unwind the stack index by a number of items.<br><br>
 
    10. pointer\_stack_free
 
-	  Whenever an operation allocates data, it must be freed by this function.
+	  Whenever an operation allocates data, it must be freed by this function.<br><br>
 
    11. pointer\_stack_allocation
 
@@ -145,7 +145,17 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  reallocator procedures. The prototype of these procedures must follow the C
 	  standard. If this procedure is not called, the C standard is used for each
 	  procedure. This procedure may not be called after a stack item has been
-	  allocated until such time that no stacks are allocated.
+	  allocated until such time that no stacks are allocated.<br><br>
+
+   10. pointer\_stack\_auto_pack
+
+	  Sets a value, that states when to automatically pack the stack due to excess.
+	  <br><br>
+
+   10. pointer\_stack_buffer
+
+	  Sets a value, that states how many units should be pre-allocated when space is
+	  needed.<br><br>
 
 Notes
 
