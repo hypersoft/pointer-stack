@@ -109,6 +109,11 @@ void * pointer_stack_get_private(PointerStack * stack) {
 	return stack->private;
 }
 
+/* set the private data associated with a PointerStack */
+void pointer_stack_set_private(PointerStack * stack, void * private) {
+	stack->private = private;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
