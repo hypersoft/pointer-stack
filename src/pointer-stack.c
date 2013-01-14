@@ -125,6 +125,11 @@ void pointer_stack_set_limit(PointerStack * stack, void * limit) {
 	stack->limit = limit;
 }
 
+/* get the pointer to the pointer of an element in a PointerStack */
+void * pointer_stack_pointer(PointerStack * stack, unsigned long index) {
+	return stack->item[index];
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
