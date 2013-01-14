@@ -5,7 +5,7 @@ A procedural library of methods (written in C) for managing stacks of pointers.
 
 #### Status
 
-* Active Development
+* :pager: Active Development
 
 ><hr>
 
