@@ -56,6 +56,12 @@ static bool invert_range_item(unsigned long lower, unsigned long upper, unsigned
 
 }
 
+/* Retrieve and clear the error value associated with a PointerStack */
+unsigned long pointer_stack_error(PointerStack * stack) {
+	unsigned long error = stack->error; stack->error = 0;
+	return error;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
