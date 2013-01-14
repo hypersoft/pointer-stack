@@ -1,7 +1,7 @@
 [Hypersoft pointer-stack](http://www.github.com/hypersoft/pointer-stack) <markup theme=hypersoft>
 =======================
 
-A procedural library of methods for managing stacks of pointers.
+A procedural library of methods (written in C) for managing stacks of pointers.
 
 #### Status
 
@@ -13,7 +13,7 @@ A procedural library of methods for managing stacks of pointers.
 
 You should consult this
 [Wikipedia Article](http://en.wikipedia.org/wiki/Stack_%28abstract_data_type%29) for
-a more informative approach than asking us to explain it for you.
+a more informative approach than asking us to explain it to you.
 
 ><hr>
 
@@ -21,7 +21,7 @@ a more informative approach than asking us to explain it for you.
 
 Because we cannot do this at runtime:
 
-	char * array = { "one", "two", "three" };
+	char * array[] = { "one", "two", "three", NULL };
 
 That is not all that we cannot do by far, but represents the most basic need to
 maintain a "naturally ordered collection" of items at runtime.
@@ -32,7 +32,9 @@ maintain a "naturally ordered collection" of items at runtime.
 You may or may not have, ever heard of "The Pointers of Stack Management". This term
 was coined here by the original project author. Pointers 1-2 are pretty much your
 "standard fare". Items further down the list are "trinkets of conventionality". More
-or less "Code Hacker's Tools".
+or less "Code Hacker's Tools". Oddly enough, "The Pointers of Stack Management", can
+be simply called "The P's of Stack Management" because each operation, begins with the
+letter 'P'.
 
    1. pointer\_stack_push
 
