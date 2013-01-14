@@ -77,6 +77,11 @@ void pointer_stack_auto_pack(PointerStack * stack, unsigned long value) {
 	stack->auto_pack = value;
 }
 
+/* deallocate storage */
+void pointer_stack_free(void * data) {
+	deallocate(data);
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
