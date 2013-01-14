@@ -87,6 +87,11 @@ void pointer_stack_invert(PointerStack * stack, bool status) {
 	stack->inverted = status;
 }
 
+/* decrement the reference counted lock on a PointerStack */
+void pointer_stack_unlock(PointerStack * stack) {
+	stack->lock--;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
