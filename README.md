@@ -181,7 +181,7 @@ as yet another PointerStack! For these cases, the following methods are provided
    15. pointer\_stack_license
 
 	  Obtains a char * to the license associated with this library for display at the
-	  user's request, or developer's recommendation.<br><br>
+	  user's request, or developer's behest.<br><br>
 
 
 Notes
