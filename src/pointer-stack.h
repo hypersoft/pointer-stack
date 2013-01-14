@@ -34,14 +34,8 @@ extern void pointer_stack_allocation (
 /* Retrieve and clear the error value associated with a PointerStack */
 extern unsigned long pointer_stack_error(PointerStack);
 
-/* Setup a dual buffering scheme on a PointerStack */
-extern void pointer_stack_optimize(PointerStack, unsigned long);
-
 /* Setup PointerStack's preallocation buffer */
-extern void pointer_stack_buffer(PointerStack, unsigned long value);
-
-/* Setup PointerStack's deallocation buffer */
-extern void pointer_stack_auto_pack(PointerStack, unsigned long value);
+extern void pointer_stack_buffering(PointerStack, unsigned long);
 
 /* deallocate storage */
 extern void pointer_stack_free(void);

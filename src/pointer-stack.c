@@ -35,7 +35,6 @@ static typedef struct PointerStack {
 	unsigned long count;
 	unsigned long lock;
 	unsigned long limit;
-	unsigned long auto_pack;
 	unsigned long buffer;
 	unsigned long error;
 
@@ -62,21 +61,9 @@ unsigned long pointer_stack_error(PointerStack * stack) {
 	return error;
 }
 
-/* Setup a dual buffering scheme on a PointerStack */
-void pointer_stack_optimize(PointerStack * stack, unsigned long value) {
-	stack->auto_pack = stack->buffer = value;
-}
-
 /* Setup PointerStack's preallocation buffer */
-void pointer_stack_buffer(PointerStack * stack, unsigned long value) {
+void pointer_stack_set_buffering(PointerStack * stack, unsigned long value) {
 	stack->buffer = value;
-	if (stack->auto_pack < value) stack->auto_pack = value;
-}
-
-/* Setup PointerStack's deallocation buffer */
-void pointer_stack_auto_pack(PointerStack * stack, unsigned long value) {
-	stack->auto_pack = value;
-	if (stack->buffer > value) stack->buffer = value;
 }
 
 /* deallocate storage */
