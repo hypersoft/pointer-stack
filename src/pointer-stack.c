@@ -31,6 +31,7 @@ static typedef struct PointerStack {
 	void * private;
 
 	unsigned long index;
+	unsigned long units;
 	unsigned long count;
 	unsigned long lock;
 	unsigned long limit;
