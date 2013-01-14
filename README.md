@@ -153,7 +153,8 @@ up a proper buffering scheme.
 	  Sets a value that determines how to buffer the PointerStack. If available space,
 	  reaches zero, and the buffer is not locked or limited, the value provided here
 	  will be pre-allocated. Whenever this value is non-zero, automatic buffering
-	  may take place during push/pop operations. The default is 8.<br><br>
+	  may take place during push/pop operations. The default is 8 units (pointers).
+	  <br><br>
 
 ><hr>
 
