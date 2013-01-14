@@ -147,15 +147,19 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  procedure. This procedure may not be called after a stack item has been
 	  allocated until such time that no stacks are allocated.<br><br>
 
-   10. pointer\_stack\_auto_pack
+   12. pointer\_stack\_auto_pack
 
 	  Sets a value, that states when to automatically pack the stack due to excess.
 	  <br><br>
 
-   10. pointer\_stack_buffer
+   13. pointer\_stack_buffer
 
 	  Sets a value, that states how many units should be pre-allocated when space is
 	  needed.<br><br>
+
+   13. pointer\_stack_optimize
+
+	  Sets the value of "auto_pack" and "buffer".<br><br>
 
 Notes
 
