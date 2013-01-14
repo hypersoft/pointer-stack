@@ -169,9 +169,20 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  Sets a value, that states how many units should be pre-allocated when space is
 	  needed.<br><br>
 
-   13. pointer\_stack_optimize
+   14. pointer\_stack_optimize
 
 	  Sets the value of "auto_pack" and "buffer".<br><br>
+
+   15. pointer\_stack_error
+
+	  If something went wrong, call this to get the last error. Consequently, clears
+	  the last error.<br><br>
+
+   15. pointer\_stack_license
+
+	  Obtains a char * to the license associated with this library for display at the
+	  user's request, or developer's recommendation.<br><br>
+
 
 Notes
 
@@ -180,9 +191,12 @@ Notes
 
 * Calling "free" on a pointer stack does not free private data, or any element data.
 
-* The pointer stack API, does not provide a way to get the actual stack pointer. This
-  is in the full interest of data integrity. You should use the operationally sane
-  "export" if you need to manually modify data, or pass it along to something else.
+* The pointer stack API, does not recommend manipulating the actual stack pointer.
+  This is in the full interest of data integrity. You should use the operationally
+  sane "export" if you need to manually modify data, or pass it along to something
+  else. Using pointer\_stack_pointer, is a pretty good way to "Put your eye out kid".
+  Recommendation: adjust for richochet, shoot straight, and laugh triumphantly in the
+  face of fear.
 
 ><hr>
 
