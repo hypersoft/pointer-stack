@@ -43,8 +43,9 @@ letter 'P'.
 
    2. pointer\_stack_pop
 
-	  The newest additions to the stack, are usually the first to go. "pop" provides,
-	  a way to "git rid" of the last piece added to the stack.<br><br>
+	  The newest additions to the PointerStack, are usually the first to go. "pop"
+	  provides, a way to "git rid" of the last piece added to the PointerStack.
+	  <br><br>
 
    3. pointer\_stack_peek
 
@@ -103,14 +104,15 @@ are provided.
 
    00. pointer\_stack\_get_limit
 
-	  Obtain the value associated with the stack's upper limit.<br><br>
+	  Obtain the value associated with the PointerStack's upper limit.<br><br>
 
 ><hr>
 
 #### Private Data
-From time to time, a stack may require an association of unmanaged data. Such as a type
-descriptor, a procedural header, or anything related to the contents of the stack, such
-as yet another PointerStack! For these cases, the following methods are provided.
+From time to time, a stack may require an association of unmanaged data. Such as a 
+type descriptor, a procedural header, or anything related to the contents of the
+PointerStack, such as yet another PointerStack! For these cases, the following methods
+are provided.
 
    00. pointer\_stack\_set_private
 
@@ -124,9 +126,10 @@ as yet another PointerStack! For these cases, the following methods are provided
 
 #### Protection
 Sometimes you need a pointer to a pointer, since we have these, we need a reference 
-counted way to prevent the stack from growing and shrinking. Reallocation sometimes 
-transfers the stack data to a new location. Whenever, a stack is limited, lock/unlock, 
-essentially "do nothing", unless the, stack becomes, "unlimited".
+counted way to prevent the PointerStack from growing and shrinking. Reallocation 
+sometimes transfers the PointerStack data to a new location. Whenever, a stack is 
+limited, lock/unlock, essentially "do nothing", unless the, stack becomes, 
+"unlimited".
 
    00. pointer\_stack_lock
 
@@ -145,8 +148,9 @@ reserved or truncated by calling any of the following procedures.
 
    00. pointer\_stack\_auto_pack
 
-	  Sets a value, that states when to automatically pack the stack due to excess. If
-	  this value is less than the buffering, buffering will be truncated to this value.
+	  Sets a value, that states when to automatically pack the PointerStack due to 
+	  excess. If this value is less than the buffering, buffering will be truncated
+	  to this value.
 	  <br><br>
 
    00. pointer\_stack_buffer
@@ -165,7 +169,7 @@ reserved or truncated by calling any of the following procedures.
 
    00. pointer\_stack\_get_count
 
-	  Get the number of elements currently on the stack.<br><br>
+	  Get the number of elements currently on the PointerStack.<br><br>
 
    00. pointer\_stack_reverse
 
@@ -176,7 +180,8 @@ reserved or truncated by calling any of the following procedures.
    00. pointer\_stack_invert
 
 	  Mathematically, reverses the order of all elements. This only applies to "peek"
-	  and "poke" operations. For all other operations, reverse the stack.<br><br>
+	  and "poke" operations. For all other operations, reverse the PointerStack.<br>
+      <br>
 
    00. pointer\_stack_export
 
@@ -186,11 +191,11 @@ reserved or truncated by calling any of the following procedures.
    00. pointer\_stack_import
 
 	  Given a zero terminated array of pointers, place each pointer on to the top of
-	  the stack.<br><br>
+	  the PointerStack.<br><br>
 
    00. pointer\_stack_void
 
-	  Unwind the stack index by a number of items.<br><br>
+	  Unwind the PointerStack index by a number of items.<br><br>
 
    00. pointer\_stack_error
 
@@ -205,16 +210,18 @@ reserved or truncated by calling any of the following procedures.
 Notes
 
 * Combinations of import, export, and void can be used to "slice", "join",
-"duplicate", "concatenate", or otherwise manipulate entire stacks.
+"duplicate", "concatenate", or otherwise manipulate entire PointerStacks.
 
 * Calling "free" on a PointerStack does not free private data, or any element data.
 
-* The PointerStack API, does not recommend manipulating the actual stack pointer.
-  This is in the full interest of data integrity. You should use the operationally
-  sane "export" if you need to manually modify data, or pass it along to something
-  else. Using pointer\_stack_pointer, is a pretty good way to "Put your eye out kid".
-  Recommendation: adjust for richochet, shoot straight, and laugh triumphantly in the
-  face of fear.
+* The PointerStack API, does not recommend manipulating the actual PointerStack
+  pointer. This is in the full interest of data integrity. You should use the
+  operationally sane "export" if you need to manually modify data, or pass it along to
+  something else. Using pointer\_stack_pointer, is a pretty good way to
+  "Shoot your eye out kid". Recommendation: adjust for richochet, shoot straight, and 
+  laugh triumphantly in the face of fear.
 
 ><hr>
 
+
+                  <center><h5>Points of Authority</h5></center>
