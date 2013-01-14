@@ -71,16 +71,37 @@ letter 'P'.
 
 ><hr>
 
+#### Lifecycle
+
+   00. pointer\_stack_allocation
+
+	  Called to initialize the API, one must provide allocator, deallocator, and
+	  reallocator procedures. The prototype of these procedures must follow the C
+	  standard. If this procedure is not called, the C standard is used for each
+	  procedure. This procedure may not be called after any dynamic data has been
+	  allocated until such time that no data provided by the allocator are allocated.
+	  <br><br>
+
+   00. pointer\_stack_create
+
+	  Creates a new empty pointer stack.<br><br>
+
+   00. pointer\_stack_free
+
+	  Whenever an operation allocates data, it must be freed by this function.<br><br>
+
+><hr>
+
 #### Limitations
 From time to time, a stack may be some thing that can only grow to a limited number of
 items, And it may never grow to such a length. For these cases, the following methods
 are provided.
 
-   1. pointer\_stack\_set_limit
+   00. pointer\_stack\_set_limit
 
 	  Truncates data, packs stack as well.<br><br>
 
-   2. pointer\_stack\_get_limit
+   00. pointer\_stack\_get_limit
 
 	  Obtain the value associated with the stack's upper limit.<br><br>
 
@@ -91,23 +112,19 @@ From time to time, a stack may require an association of unmanaged data. Such as
 descriptor, a procedural header, or anything related to the contents of the stack, such
 as yet another PointerStack! For these cases, the following methods are provided.
 
-   1. pointer\_stack\_set_private
+   00. pointer\_stack\_set_private
 
 	  Overwrites current if any.<br><br>
 
-   2. pointer\_stack\_get_private
+   00. pointer\_stack\_get_private
 
 	  Obtain the pointer to the private data.<br><br>
 
 ><hr>
 
-#### Extended Operations
+#### Protection
 
-   01. pointer\_stack\_get_count
-
-	  Get the number of elements currently on the stack.<br><br>
-
-   02. pointer\_stack_lock
+   00. pointer\_stack_lock
 
 	  Sometimes you need a pointer to a pointer, since we have these, we need a
 	  reference counted way to prevent the stack from growing and shrinking.
@@ -115,78 +132,69 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  a stack is limited, lock, essentially "does nothing", unless the, stack becomes,
 	  "unlimited".<br><br>
 
-   03. pointer\_stack_unlock
+   00. pointer\_stack_unlock
 
 	  decrements the lock reference count by 1.<br><br>
 
-   04. pointer\_stack_reverse
+><hr>
 
-	  Physically, reverses the order of all elements after "packing". This operation
-	  is not effected by "lock" as it will not invalidate the primary pointer.<br><br>
+#### Optimization
 
-   05. pointer\_stack_invert
-
-	  Mathematically, reverses the order of all elements. This only applies to "peek"
-	  and "poke" operations. For all other operations, reverse the stack.<br><br>
-
-   06. pointer\_stack_sort
-
-	  Sort the elements by their content address, least to greatest.<br><br>
-
-   07. pointer\_stack_export
-
-	  Given a valid range of elements, export returns a "plain jane" newly allocated,
-	  zero terminated, array of pointers which must be freed.<br><br>
-
-   08. pointer\_stack_import
-
-	  Given a zero terminated array of pointers, place each pointer on to the top of
-	  the stack.<br><br>
-
-   09. pointer\_stack_void
-
-	  Unwind the stack index by a number of items.<br><br>
-
-   10. pointer\_stack_free
-
-	  Whenever an operation allocates data, it must be freed by this function.<br><br>
-
-   11. pointer\_stack_allocation
-
-	  Called to initialize the API, one must provide allocator, deallocator, and
-	  reallocator procedures. The prototype of these procedures must follow the C
-	  standard. If this procedure is not called, the C standard is used for each
-	  procedure. This procedure may not be called after any dynamic data has been
-	  allocated until such time that no data provided by the allocator are allocated.
-	  <br><br>
-
-   12. pointer\_stack\_auto_pack
+   00. pointer\_stack\_auto_pack
 
 	  Sets a value, that states when to automatically pack the stack due to excess.
 	  <br><br>
 
-   13. pointer\_stack_buffer
+   00. pointer\_stack_buffer
 
 	  Sets a value, that states how many units should be pre-allocated when space is
 	  needed.<br><br>
 
-   14. pointer\_stack_optimize
+   00. pointer\_stack_optimize
 
 	  Sets the value of "auto_pack" and "buffer".<br><br>
 
-   15. pointer\_stack_error
+><hr>
+
+#### Extended Operations
+
+   00. pointer\_stack\_get_count
+
+	  Get the number of elements currently on the stack.<br><br>
+
+   00. pointer\_stack_reverse
+
+	  Physically, reverses the order of all elements after "packing". This operation
+	  is not effected by "lock" as it will not invalidate the primary pointer.<br><br>
+
+   00. pointer\_stack_invert
+
+	  Mathematically, reverses the order of all elements. This only applies to "peek"
+	  and "poke" operations. For all other operations, reverse the stack.<br><br>
+
+   00. pointer\_stack_export
+
+	  Given a valid range of elements, export returns a "plain jane" newly allocated,
+	  zero terminated, array of pointers which must be freed.<br><br>
+
+   00. pointer\_stack_import
+
+	  Given a zero terminated array of pointers, place each pointer on to the top of
+	  the stack.<br><br>
+
+   00. pointer\_stack_void
+
+	  Unwind the stack index by a number of items.<br><br>
+
+   00. pointer\_stack_error
 
 	  If something went wrong, call this to get the last error. Consequently, clears
 	  the last error.<br><br>
 
-   16. pointer\_stack_license
+   00. pointer\_stack_license
 
 	  Obtains a char * to the license associated with this library for display at the
 	  user's request, or developer's behest.<br><br>
-
-   17. pointer\_stack\_create
-
-	  Creates a new empty pointer stack.<br><br>
 
 Notes
 
