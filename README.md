@@ -123,22 +123,25 @@ as yet another PointerStack! For these cases, the following methods are provided
 ><hr>
 
 #### Protection
+Sometimes you need a pointer to a pointer, since we have these, we need a reference 
+counted way to prevent the stack from growing and shrinking. Reallocation sometimes 
+transfers the stack data to a new location. Whenever, a stack is limited, lock/unlock, 
+essentially "do nothing", unless the, stack becomes, "unlimited".
 
    00. pointer\_stack_lock
 
-	  Sometimes you need a pointer to a pointer, since we have these, we need a
-	  reference counted way to prevent the stack from growing and shrinking.
-	  Reallocation sometimes transfers the stack data to a new location. Whenever,
-	  a stack is limited, lock, essentially "does nothing", unless the, stack becomes,
-	  "unlimited".<br><br>
+	  Always increments the lock reference count by 1.<br><br>
 
    00. pointer\_stack_unlock
 
-	  decrements the lock reference count by 1.<br><br>
+	  Always decrements the lock reference count by 1.<br><br>
 
 ><hr>
 
 #### Optimization
+Optimization takes place in the allocation and deallocation routines. Instead of,
+reallocating the "stack frame" for each "push" and "pop", space can be automatically 
+reserved or truncated by calling any of the following procedures.
 
    00. pointer\_stack\_auto_pack
 
@@ -164,8 +167,9 @@ as yet another PointerStack! For these cases, the following methods are provided
 
    00. pointer\_stack_reverse
 
-	  Physically, reverses the order of all elements after "packing". This operation
-	  is not effected by "lock" as it will not invalidate the primary pointer.<br><br>
+	  Physically, reverses the order of all elements after "packing" to the current
+	  defined parameters. This operation is not effected by "lock" as it will not
+	  result in an operation that relocates the PointerStack element buffer.<br><br>
 
    00. pointer\_stack_invert
 
