@@ -76,6 +76,8 @@ are provided.
 
    2. pointer\_stack\_get_limit
 
+	  Obtain the value associated with the stack's upper limit.<br><br>
+
 ><hr>
 
 #### Private Data
@@ -88,6 +90,8 @@ as yet another PointerStack! For these cases, the following methods are provided
 	  Overwrites current if any.<br><br>
 
    2. pointer\_stack\_get_private
+
+	  Obtain the pointer to the private data.<br><br>
 
 ><hr>
 
@@ -111,11 +115,13 @@ as yet another PointerStack! For these cases, the following methods are provided
 
    04. pointer\_stack_reverse
 
-	  Physically, reverses the order of all elements.<br><br>
+	  Physically, reverses the order of all elements after "packing". This operation
+	  is not effected by "lock" as it will not invalidate the primary pointer.<br><br>
 
    05. pointer\_stack_invert
 
-	  Mathematically, reverses the order of all elements.<br><br>
+	  Mathematically, reverses the order of all elements. This only applies to "peek"
+	  and "poke" operations. For all other operations, reverse the stack.<br><br>
 
    06. pointer\_stack_sort
 
