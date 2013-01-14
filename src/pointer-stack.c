@@ -72,6 +72,11 @@ void pointer_stack_buffer(PointerStack * stack, unsigned long value) {
 	stack->buffer = value;
 }
 
+/* Setup PointerStack's deallocation buffer */
+void pointer_stack_auto_pack(PointerStack * stack, unsigned long value) {
+	stack->auto_pack = value;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
