@@ -116,12 +116,12 @@ void pointer_stack_set_private(PointerStack * stack, void * private) {
 
 
 /* get the data limit associated with a PointerStack */
-void * pointer_stack_get_limit(PointerStack * stack) {
+unsigned long pointer_stack_get_limit(PointerStack * stack) {
 	return stack->limit;
 }
 
 /* set the private data associated with a PointerStack */
-void pointer_stack_set_limit(PointerStack * stack, void * limit) {
+void pointer_stack_set_limit(PointerStack * stack, unsigned long limit) {
 	stack->limit = limit;
 }
 
