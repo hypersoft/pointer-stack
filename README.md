@@ -67,7 +67,7 @@ letter 'P'.
 
    6. pointer\_stack_pointer
 
-	  If you need a pointer to a pointer on the stack, this is your man.<br><br>
+	  If you need a pointer to a pointer in a PointerStack, this is your man.<br><br>
 
 ><hr>
 
