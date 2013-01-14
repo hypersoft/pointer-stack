@@ -145,13 +145,15 @@ reserved or truncated by calling any of the following procedures.
 
    00. pointer\_stack\_auto_pack
 
-	  Sets a value, that states when to automatically pack the stack due to excess.
+	  Sets a value, that states when to automatically pack the stack due to excess. If
+	  this value is less than the buffering, buffering will be truncated to this value.
 	  <br><br>
 
    00. pointer\_stack_buffer
 
 	  Sets a value, that states how many units should be pre-allocated when space is
-	  needed.<br><br>
+	  needed. If this value is greater than auto\_pack, auto_pack will be extended to
+	  meet this value.<br><br>
 
    00. pointer\_stack_optimize
 

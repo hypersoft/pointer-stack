@@ -70,11 +70,13 @@ void pointer_stack_optimize(PointerStack * stack, unsigned long value) {
 /* Setup PointerStack's preallocation buffer */
 void pointer_stack_buffer(PointerStack * stack, unsigned long value) {
 	stack->buffer = value;
+	if (stack->auto_pack < value) stack->auto_pack = value;
 }
 
 /* Setup PointerStack's deallocation buffer */
 void pointer_stack_auto_pack(PointerStack * stack, unsigned long value) {
 	stack->auto_pack = value;
+	if (stack->buffer > value) stack->buffer = value;
 }
 
 /* deallocate storage */
@@ -122,8 +124,9 @@ unsigned long pointer_stack_get_limit(PointerStack * stack) {
 }
 
 /* set the private data associated with a PointerStack */
-void pointer_stack_set_limit(PointerStack * stack, unsigned long limit) {
+bool pointer_stack_set_limit(PointerStack * stack, unsigned long limit) {
 	stack->limit = limit;
+	return true;
 }
 
 /* get the pointer to the pointer of an element in a PointerStack */
