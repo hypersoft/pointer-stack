@@ -5,7 +5,7 @@ A procedural library of methods (written in C) for managing stacks of pointers.
 
 #### Status
 
-* :pager: Active Development
+   :pager: Active Development
 
 ><hr>
 
@@ -144,24 +144,14 @@ limited, lock/unlock, essentially "do nothing", unless the, stack becomes,
 #### Optimization
 Optimization takes place in the allocation and deallocation routines. Instead of,
 reallocating the "stack frame" for each "push" and "pop", space can be automatically 
-reserved or truncated by calling any of the following procedures.
+reserved or truncated by setting up a proper buffering scheme.
 
-   00. pointer\_stack\_auto_pack
+   00. pointer\_stack\_set_buffering
 
-	  Sets a value, that states when to automatically pack the PointerStack due to 
-	  excess. If this value is less than the buffering, buffering will be truncated
-	  to this value.
-	  <br><br>
-
-   00. pointer\_stack_buffer
-
-	  Sets a value, that states how many units should be pre-allocated when space is
-	  needed. If this value is greater than auto\_pack, auto_pack will be extended to
-	  meet this value.<br><br>
-
-   00. pointer\_stack_optimize
-
-	  Sets the value of "auto_pack" and "buffer".<br><br>
+	  Sets a value that determines how to buffer the PointerStack. If available space,
+	  reaches zero, and the buffer is not locked or limited, the value provided here
+	  will be pre-allocated. Whenever this value is non-zero, automatic buffering
+	  may take place during push/pop operations. The default is 8.<br><br>
 
 ><hr>
 
