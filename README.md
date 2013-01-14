@@ -169,7 +169,7 @@ reserved or truncated by calling any of the following procedures.
 
    00. pointer\_stack\_get_count
 
-	  Get the number of elements currently on the PointerStack.<br><br>
+	  Get the number of elements currently in the PointerStack.<br><br>
 
    00. pointer\_stack_reverse
 
@@ -224,4 +224,4 @@ Notes
 ><hr>
 
 
-                  <center><h5>Points of Authority</h5></center>
+<center><h5>                  Points of Authority                       </h5></center>
