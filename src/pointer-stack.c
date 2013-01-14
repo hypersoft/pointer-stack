@@ -62,6 +62,11 @@ unsigned long pointer_stack_error(PointerStack * stack) {
 	return error;
 }
 
+/* Setup a dual buffering scheme on a PointerStack */
+void pointer_stack_optimize(PointerStack * stack, unsigned long value) {
+	stack->auto_pack = stack->buffer = value;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
