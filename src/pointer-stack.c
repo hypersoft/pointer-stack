@@ -67,6 +67,7 @@ void pointer_stack_optimize(PointerStack * stack, unsigned long value) {
 	stack->auto_pack = stack->buffer = value;
 }
 
+/* Setup PointerStack's preallocation buffer */
 void pointer_stack_buffer(PointerStack * stack, unsigned long value) {
 	stack->buffer = value;
 }
