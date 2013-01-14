@@ -87,9 +87,9 @@ letter 'P'.
 
 	  Creates a new empty PointerStack.<br><br>
 
-   00. pointer\_stack_free
+   00. pointer\_stack_dispose
 
-	  Whenever an operation allocates data, it must be freed by this function.<br><br>
+	  Attempts to "release" a PointerStack object.<br><br>
 
 ><hr>
 
@@ -157,11 +157,31 @@ up a proper buffering scheme.
 
 ><hr>
 
-#### Extended Operations
+#### Open Data Distribution (Import/Export)
+I/O, its not just on/off. Its what computers are supposed to do.
 
    00. pointer\_stack\_get_count
 
 	  Get the number of elements currently in the PointerStack.<br><br>
+
+   00. pointer\_stack_export
+
+	  Given a valid range of elements, export returns a
+	  ["plain jane"](http://en.wikipedia.org/wiki/Plain_Jane) newly allocated,
+	  zero terminated, array of pointers which must be freed.<br><br>
+
+   00. pointer\_stack_free
+
+	  Whenever an export is requested, it must be freed by this function.<br><br>
+
+   00. pointer\_stack_import
+
+	  Given a zero terminated array of pointers, place each pointer on to the top of
+	  the PointerStack.<br><br>
+
+><hr>
+
+#### Extended Operations
 
    00. pointer\_stack_reverse
 
@@ -174,17 +194,6 @@ up a proper buffering scheme.
 	  Mathematically, reverses the order of all elements. This only applies to "peek"
 	  and "poke" operations. For all other operations, reverse the PointerStack.<br>
       <br>
-
-   00. pointer\_stack_export
-
-	  Given a valid range of elements, export returns a
-	  ["plain jane"](http://en.wikipedia.org/wiki/Plain_Jane) newly allocated,
-	  zero terminated, array of pointers which must be freed.<br><br>
-
-   00. pointer\_stack_import
-
-	  Given a zero terminated array of pointers, place each pointer on to the top of
-	  the PointerStack.<br><br>
 
    00. pointer\_stack_void
 

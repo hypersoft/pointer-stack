@@ -144,6 +144,7 @@ PointerStack * pointer_stack_create(void) {
 /* Destroy a PointerStack */
 bool pointer_stack_dispose(PointerStack * stack) {
 	if (stack->lock || ! stack) return false;
+	pointer_stack_free(stack->item);
 	deallocate(stack); stacks--;
 	return true;
 }
