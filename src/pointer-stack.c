@@ -16,7 +16,7 @@
 #endif
 
 static typedef void * ( * PointerStackAllocator  ) ( unsigned long );
-static typedef void   (   PointerStackDeallocator) ( void *        );
+static typedef void   ( * PointerStackDeallocator) ( void *        );
 
 static PointerStackAllocator 	allocate 	= &malloc;
 static PointerStackAllocator 	reallocate 	= &realloc;
