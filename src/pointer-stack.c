@@ -120,6 +120,11 @@ void * pointer_stack_get_limit(PointerStack * stack) {
 	return stack->limit;
 }
 
+/* set the private data associated with a PointerStack */
+void pointer_stack_set_limit(PointerStack * stack, void * limit) {
+	stack->limit = limit;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
