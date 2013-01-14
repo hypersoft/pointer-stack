@@ -80,6 +80,7 @@ void pointer_stack_auto_pack(PointerStack * stack, unsigned long value) {
 /* deallocate storage */
 void pointer_stack_free(void * data) {
 	deallocate(data);
+	stacks--;
 }
 
 /* control index inversion on a PointerStack */
@@ -142,6 +143,13 @@ void * pointer_stack_peek(PointerStack * stack, unsigned long index) {
 	return stack->item[index];
 }
 
+/* Create a new PointerStack */
+PointerStack * pointer_stack_create(void) {
+	stacks++;
+	void * result = allocate(sizeof(PointerStack));
+	memset(result, 0, sizeof(PointerStack));
+	return result;
+}
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 

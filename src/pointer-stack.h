@@ -79,4 +79,6 @@ extern void * pointer_stack_poke(PointerStack, unsigned long, void *);
 /* Examine a value in a PointerStack */
 extern void * pointer_stack_peek(PointerStack, unsigned long);
 
+/* Create a new PointerStack */
+PointerStack pointer_stack_create(void);
 
