@@ -103,7 +103,7 @@ as yet another PointerStack! For these cases, the following methods are provided
 
 #### Extended Operations
 
-   01. pointer\_stack_elements
+   01. pointer\_stack\_get_count
 
 	  Get the number of elements currently on the stack.<br><br>
 
