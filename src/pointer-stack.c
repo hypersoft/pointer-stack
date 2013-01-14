@@ -99,6 +99,11 @@ bool pointer_stack_lock(PointerStack * stack) {
 	return true;
 }
 
+/* get the count of elements in a PointerStack */
+unsigned long pointer_stack_get_count(PointerStack * stack) {
+	return stack->count;
+}
+
 /* This is not a thread safe operation. Avoid use wherever possible */
 void pointer_stack_initialize(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy) {
 
