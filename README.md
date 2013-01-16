@@ -72,7 +72,7 @@ letter 'P'.
 
 ><hr>
 
-#### Lifecycle
+#### Allocator Initialization
 
    00. pointer\_stack_allocation
 
@@ -82,6 +82,10 @@ letter 'P'.
 	  procedure. This procedure may not be called after any dynamic data has been
 	  allocated until such time that no data provided by the allocator are allocated.
 	  <br><br>
+
+><hr>
+
+#### Lifecycle
 
    00. pointer\_stack_create
 
@@ -162,7 +166,7 @@ up a proper buffering scheme.
 
 ><hr>
 
-#### Open Data Distribution (Import/Export)
+#### Data I/O
 I/O, its not just on/off. Its what computers are supposed to do.
 
    00. pointer\_stack\_get_count
