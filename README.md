@@ -72,12 +72,14 @@ letter 'P'.
 
 ><hr>
 
-#### Allocator Initialization
+#### Core Allocator
+The core allocator manages data allocation, and streamlines the process of tracking
+the number of distributed allocation units by providing an interal API.
 
-   00. pointer\_stack_allocation
+   00. pointer\_stack\_initialize_allocation
 
-	  Called to initialize the API, one must provide allocator, deallocator, and
-	  reallocator procedures. The prototype of these procedures must follow the C
+	  Called to initialize the allocator API, one must provide allocator, deallocator,
+	  and reallocator procedures. The prototype of these procedures must follow the C
 	  standard. If this procedure is not called, the C standard is used for each
 	  procedure. This procedure may not be called after any dynamic data has been
 	  allocated until such time that no data provided by the allocator are allocated.
