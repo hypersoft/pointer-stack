@@ -12,9 +12,8 @@
 
 	#define POINTER_STACK_H
 
-	#ifndef _STRING_H
-		#include <string.h> /* size_t */
-	#endif
+	#include <string.h> /* size_t */
+	#include <stdbool.h> /* bool */
 
 	/* Operation Context */
 	typedef void * PointerStack;
