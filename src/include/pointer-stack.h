@@ -27,6 +27,12 @@
 		PSE_OVERFLOW,
 	} PointerStackError;
 
+	// Procedures returning a pointer, will return this value to indicate null as null
+	// may be a valid pointer value but -1 will never be a valid pointer address.
+	void * PS_ACTION_NULL = (void *)(-1LL);
+
+	#define PointerStackActionPointer(PTR) PS_ACTION_NULL != PTR
+ 
 	/* Internally Allocated Export Data */
 	typedef void * PointerStackExport;
 

@@ -51,8 +51,7 @@ typedef enum PointerStackError {
 	PSE_OVERFLOW,
 } PointerStackError;
 
-/* Externally this is only a (void *) */
-typedef void PointerStackExport;
+static void * PS_ACTION_NULL = (void *)(-1LL);
 
 #include "pointer-stack-allocation.c"
 #include "pointer-stack-extended.c"
@@ -101,8 +100,21 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 /* Pop item off of stack top */
 void * pointer_stack_pop(PointerStack * stack) {
-	void * pointer = NULL;
-	if (HavePointerStack && HavePointerStackData) pointer = stack->item[--stack->index];
+	void * pointer = PS_ACTION_NULL;
+	if (HavePointerStack && HavePointerStackData)
+		pointer = stack->item[--stack->index];
 	return pointer;
 }
 
+void * pointer_stack_peek(PointerStack * stack, size_t index) {
+
+	void * pointer = PS_ACTION_NULL;
+
+	if (HavePointerStack && HavePointerStackData) {
+		if (index < stack->units)
+			pointer = stack->item[index];
+	}
+
+	return pointer;
+
+}
