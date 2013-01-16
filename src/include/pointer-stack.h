@@ -37,6 +37,8 @@
 	/* API Procedures */
 
 	/* main */
+	extern bool pointer_stack_push(PointerStack, void *);
+	extern void * pointer_stack_pop(PointerStack);
 
 	/* allocation */
 	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy);

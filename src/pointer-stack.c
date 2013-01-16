@@ -2,18 +2,11 @@
 	Copyright (C) 2013, Triston J. Taylor
 */
 
-/* Provides Internals:
+/* Provides API:
 
-	void * pointer_stack_allocator_lease(size_t size);
-	void * pointer_stack_allocator_resize(void * data, size_t size);
-	void   pointer_stack_allocator_release(void * data);
+	extern bool pointer_stack_push(PointerStack, void *);
+	extern void * pointer_stack_pop(PointerStack);
 
-	Provides API:
-
-	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy);
-
-	Note: Items marked with an asterisk have not yet been implemented.
- 
 */
 
 #include <stdlib.h> /* malloc, realloc, free */
@@ -25,8 +18,10 @@
 // test case macros, assuming stack is type of PointerStack
 #define HavePointerStack stack
 #define HavePointerStackData stack->item
+#define HavePointerStackSlot stack->index < stack->units
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
+#define PointerStackIsGrowable ! stack->lock && ! stack->limit
 #define PointerStackIsBuffered stack->buffer
 #define PointerStackIsInverted stack->inverted
 
@@ -81,12 +76,33 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
+
+	size_t units = 0;
+
+	if ( ! HavePointerStack ) return false;
+
+	if ( ! HavePointerStackData ) {
+		units = (1 + stack->buffer);
+		stack->item = pointer_stack_allocator_lease(units);
+		stack->units = units;
+	}
+
+	if ( ! HavePointerStackSlot ) { 
+		if ( ! PointerStackIsGrowable ) return false;
+		units = (1 + stack->units + stack->buffer);
+		stack->item = pointer_stack_allocator_resize(stack->item, units);
+		stack->units = units;
+	}
+
 	stack->item[stack->index++] = pointer;
 	return true;
+
 }
 
 /* Pop item off of stack top */
 void * pointer_stack_pop(PointerStack * stack) {
-	return stack->item[--stack->index];
+	void * pointer = NULL;
+	if (HavePointerStack && HavePointerStackData) pointer = stack->item[--stack->index];
+	return pointer;
 }
 
