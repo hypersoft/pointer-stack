@@ -74,7 +74,7 @@ letter 'P'.
 
 #### Core Allocator
 The core allocator manages data allocation, and streamlines the process of tracking
-the number of distributed allocation units by providing an interal API.
+the number of distributed allocation units by providing an internal API.
 
    00. pointer\_stack\_initialize_allocation
 
