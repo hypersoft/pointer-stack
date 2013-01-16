@@ -12,7 +12,7 @@
 /* Create a new PointerStack */
 PointerStack * pointer_stack_create(void) {
 
-	void * result = pointer_stack_allocator_lease(sizeof(PointerStack));
+	PointerStack * result = pointer_stack_allocator_lease(sizeof(PointerStack));
 
 	if (result) {
 		memset(result, 0, sizeof(PointerStack));

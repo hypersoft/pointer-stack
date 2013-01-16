@@ -82,7 +82,7 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 	stack->item[stack->index++] = pointer;
-	return true
+	return true;
 }
 
 /* Pop item off of stack top */
