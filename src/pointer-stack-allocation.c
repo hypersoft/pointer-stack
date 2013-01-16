@@ -12,8 +12,6 @@
 
 	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy);
 
-	Note: Items marked with an asterisk have not yet been implemented.
- 
 */
 
 static typedef void * ( * PointerStackAllocator  ) ( unsigned long );
