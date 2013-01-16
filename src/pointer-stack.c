@@ -16,12 +16,9 @@
  
 */
 
-#ifndef _STDLIB_H
 #include <stdlib.h> /* malloc, realloc, free */
-#endif
-#ifndef _STRING_H
 #include <string.h> /* memset, size_t */
-#endif
+#include <stdbool.h> /* bool */
 
 /* Internal Macros */
 
