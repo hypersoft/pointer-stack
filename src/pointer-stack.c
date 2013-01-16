@@ -6,6 +6,8 @@
 
 	extern bool pointer_stack_push(PointerStack, void *);
 	extern void * pointer_stack_pop(PointerStack);
+	extern void * pointer_stack_peek(PointerStack, size_t);
+	extern void * pointer_stack_poke(PointerStack, size_t, void *);
 
 */
 
@@ -124,3 +126,15 @@ void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
 }
 
+void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
+
+	void * result = PS_ACTION_NULL;
+
+	if ( ! HavePointerStack || ! HavePointerStackData || index >= stack->index || pointer == result)
+		return result;
+
+	result = stack->item[index]; stack->item[index] = pointer;
+
+	return result;
+
+}

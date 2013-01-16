@@ -38,6 +38,7 @@
 
 	/* Global Allocation Routines */
 	typedef void * ( * PointerStackAllocator   ) ( size_t );
+	typedef void * ( * PointerStackReallocator ) ( void *, size_t );
 	typedef void   ( * PointerStackDeallocator ) ( void * );
 
 	/* API Procedures */
@@ -45,9 +46,11 @@
 	/* main */
 	extern bool pointer_stack_push(PointerStack, void *);
 	extern void * pointer_stack_pop(PointerStack);
+	extern void * pointer_stack_peek(PointerStack, size_t);
+	extern void * pointer_stack_poke(PointerStack, size_t, void *);
 
 	/* allocation */
-	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackAllocator resize, PointerStackDeallocator destroy);
+	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy);
 
 	/* extended */
 	
