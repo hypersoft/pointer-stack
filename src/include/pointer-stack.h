@@ -31,7 +31,7 @@
 	// may be a valid pointer value but -1 will never be a valid pointer address.
 	void * PS_ACTION_NULL = (void *)(-1LL);
 
-	#define PointerStackActionPointer(PTR) PS_ACTION_NULL != PTR
+	#define PointerStackActionNull(PTR) PS_ACTION_NULL == PTR
  
 	/* Internally Allocated Export Data */
 	typedef void * PointerStackExport;
