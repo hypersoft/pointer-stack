@@ -55,7 +55,8 @@
 	extern void pointer_stack_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy);
 
 	/* extended */
-	extern void   pointer_stack_invert(PointerStack, bool);
+	extern bool   pointer_stack_void(PointerStack, size_t);
+	extern bool   pointer_stack_invert(PointerStack, bool);
 	extern size_t pointer_stack_error(PointerStack);
 	extern char * pointer_stack_license(void);
 	
