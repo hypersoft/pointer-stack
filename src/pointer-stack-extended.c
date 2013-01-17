@@ -4,13 +4,11 @@
 
 /* Provides API:
 
-	pointer_stack_reverse *
+	extern bool   pointer_stack_reverse(PointerStack);
 	extern bool   pointer_stack_void(PointerStack, size_t);
 	extern bool   pointer_stack_invert(PointerStack, bool);
 	extern size_t pointer_stack_error(PointerStack);
 	extern char * pointer_stack_license(void);
-
-	Note: Items marked with an asterisk have not yet been implemented.
  
 */
 
@@ -40,6 +38,21 @@ bool pointer_stack_void(PointerStack * stack, size_t count) {
 		return true;
 	}
 	return false;
+}
+
+bool pointer_stack_reverse(PointerStack * stack) {
+
+	if ( ! HavePointerStack || ! HavePointerStackData ) return false;
+	if ( stack->index == 1 ) return true;
+
+	void * duplicate[stack->index];
+	memcpy(duplicate, stack->item, (stack->index * sizeof(void *)));
+	size_t countdown = stack->item;
+	size_t countup = 0;
+
+	while (countdown) stack->item[countup++] = duplicate[--countdown];
+
+	return true;
 }
 
 const char * pointer_stack_license(void) { return pointer_stack_license_string; }
