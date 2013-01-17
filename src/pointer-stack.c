@@ -89,14 +89,14 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 	if ( ! HavePointerStackData ) {
 		units = (1 + stack->buffer);
-		stack->item = pointer_stack_allocator_lease(units);
+		stack->item = pointer_stack_allocator_lease(units * sizeof(void *));
 		stack->units = units;
 	}
 
 	if ( ! HavePointerStackSlot ) { 
 		if ( ! PointerStackIsGrowable ) return false;
 		units = (1 + stack->units + stack->buffer);
-		stack->item = pointer_stack_allocator_resize(stack->item, units);
+		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 		stack->units = units;
 	}
 
@@ -146,7 +146,7 @@ bool pointer_stack_pack(PointerStack * stack) {
 	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
 
 	size_t units = (stack->index + stack->buffer);
-	void * pointer = pointer_stack_allocator_resize(stack->item, units);
+	void * pointer = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	stack->units = units;
 
 	return true;
