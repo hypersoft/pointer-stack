@@ -5,7 +5,7 @@
 /* Provides API:
 
 	extern size_t pointer_stack_get_count(PointerStack);
-	extern bool pointer_stack_free(PointerStackExport);
+	extern bool   pointer_stack_free(PointerStackExport);
 
 	extern PointerStackExport pointer_stack_export *
 	extern bool pointer_stack_import *
@@ -18,7 +18,7 @@ typedef void PointerStackExport;
 
 /* Get the count of elements in a PointerStack */
 size_t pointer_stack_get_count(PointerStack * stack) {
-	if (HavePointerStackData) return stack->index;
+	if (HavePointerStack && HavePointerStackData) return stack->index;
 	return 0;
 }
 
