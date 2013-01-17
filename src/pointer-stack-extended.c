@@ -5,8 +5,8 @@
 /* Provides API:
 
 	pointer_stack_reverse *
-	pointer_stack_void *
-	extern void   pointer_stack_invert(PointerStack, bool);
+	extern bool   pointer_stack_void(PointerStack, size_t);
+	extern bool   pointer_stack_invert(PointerStack, bool);
 	extern size_t pointer_stack_error(PointerStack);
 	extern char * pointer_stack_license(void);
 
@@ -17,8 +17,10 @@
 #include "include/license.inc"
 
 /* control index inversion on a PointerStack */
-void pointer_stack_invert(PointerStack * stack, bool status) {
-	if (HavePointerStack) stack->inverted = status;
+bool pointer_stack_invert(PointerStack * stack, bool status) {
+	if ( ! HavePointerStack ) return false;
+	stack->inverted = status;
+	return true;
 }
 
 /* Retrieve and clear the error value associated with a PointerStack */
@@ -29,6 +31,15 @@ size_t pointer_stack_error(PointerStack * stack) {
 		stack->error = PSE_NO_ERROR;
 	}
 	return error;
+}
+
+bool pointer_stack_void(PointerStack * stack, size_t count) {
+	if ( ! HavePointerStack || ! HavePointerStackData ) return false;
+	if (count <= stack->index) {
+		stack->index -= count;
+		return true;
+	}
+	return false;
 }
 
 const char * pointer_stack_license(void) { return pointer_stack_license_string; }
