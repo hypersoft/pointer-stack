@@ -34,7 +34,7 @@ PointerStackExport * pointer_stack_export(PointerStack * stack, size_t from, siz
 	if ( ! HavePointerStack || ! HavePointerStackData ) return NULL;
 	if ( from >= stack->index || to >= stack->index ) return NULL;
 	size_t units = (to - from);
-	void ** export = pointer_stack_lease((1 + units) * sizeof(void *));
+	void ** export = pointer_stack_allocator_lease((1 + units) * sizeof(void *));
 	size_t index = 0;
 	while (from <= to) export[index++] = stack->item[from++];
 	export[units] = NULL;

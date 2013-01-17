@@ -47,7 +47,7 @@ bool pointer_stack_reverse(PointerStack * stack) {
 
 	void * duplicate[stack->index];
 	memcpy(duplicate, stack->item, (stack->index * sizeof(void *)));
-	size_t countdown = stack->item;
+	size_t countdown = stack->index;
 	size_t countup = 0;
 
 	while (countdown) stack->item[countup++] = duplicate[--countdown];
