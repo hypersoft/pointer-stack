@@ -4,10 +4,12 @@
 
 /* Provides API:
 
-	extern bool pointer_stack_push(PointerStack, void *);
+	extern bool   pointer_stack_push(PointerStack, void *);
 	extern void * pointer_stack_pop(PointerStack);
 	extern void * pointer_stack_peek(PointerStack, size_t);
 	extern void * pointer_stack_poke(PointerStack, size_t, void *);
+	extern bool   pointer_stack_pack(PointerStack * stack);
+	extern void * pointer_stack_pointer(PointerStack, size_t);
 
 */
 
@@ -136,5 +138,29 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 	result = stack->item[index]; stack->item[index] = pointer;
 
 	return result;
+
+}
+
+bool pointer_stack_pack(PointerStack * stack) {
+
+	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
+
+	size_t units = (stack->index + stack->buffer);
+	void * pointer = pointer_stack_allocator_resize(stack->item, units);
+	stack->units = units;
+
+	return true;
+
+}
+
+void * pointer_stack_pointer(PointerStack * stack, size_t index) {
+
+	void * pointer = PS_ACTION_NULL;
+
+	if ( ! HavePointerStack || ! HavePointerStackData ) return pointer;
+
+	if (index < stack->index) pointer = (stack->item + index);
+
+	return pointer;
 
 }
