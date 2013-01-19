@@ -18,7 +18,7 @@ size_t pointer_stack_get_limit(PointerStack * stack) {
 /* set the private data associated with a PointerStack */
 bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
 	if (HavePointerStack) {
-		if (stack->buffer < limit) stack->buffer = limit;
+		if (limit && stack->buffer > limit) stack->buffer = limit;
 		stack->limit = limit;
 		return true;
 	}
