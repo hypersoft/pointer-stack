@@ -75,7 +75,7 @@ or less "Code Hacker's Tools". Oddly enough, "The Pointers of Stack Management",
 be simply called "The P's of Stack Management" because each operation, begins with the
 letter 'P'.
 
-   1. bool pointer\_stack\_push(PointerStack stack, void * index)
+   1. bool pointer\_stack\_push(PointerStack stack, void * pointer)
 
 	  Add a pointer value to the top of the PointerStack. Boolean success.<br><br>
 
