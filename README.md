@@ -67,15 +67,14 @@ dispose of the same.
 #### Optimization
 Optimization takes place in the allocation and deallocation routines. Instead of,
 reallocating the ["stack frame"](http://en.wikipedia.org/wiki/Stack_frame#Structure)
-for each "push" and "pop", space can be automatically reserved or truncated by setting
+for each "push" and "pop", space can be automatically reserved by setting
 up a proper buffering scheme.
 
    00. bool pointer\_stack\_set\_buffering(PointerStack stack, size\_t size)
 
-	  Sets a value that determines how to buffer the PointerStack. If available space,
-	  reaches zero, and the buffer is not locked or limited, the value provided here
-	  will be pre-allocated. The default is 8 (pointer units).
-	  <br><br>
+	  Sets a value on the PointerStack object, that is used to determine how many
+	  pointer values to reserve space for on the PointerStack, whenever space is no
+	  longer available.<br><br>
 
 ><hr>
 
