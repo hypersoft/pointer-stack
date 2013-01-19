@@ -40,11 +40,15 @@ dispose of the same.
 	  Creates a new empty PointerStack and returns a * to the desired object type.
 	  <br><br>
 
-   00. bool pointer\_stack\_dispose(PointerStack * stack)
+   00. bool pointer\_stack\_dispose(PointerStack stack)
 
 	  Attempts to "release" a PointerStack object. The object may not be released, if
 	  it does not exist or is locked. The return value always reflects the success of
 	  the intended operation.<br><br>
+
+Note: Internally, the API uses PointerStack *, externally the API exposes only a
+void * whose type is defined as a 'PointerStack' This affords us an internal struct
+design that can be modified readily with backwards compatibility in mind. 
 
 ><hr>
 
