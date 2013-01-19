@@ -204,28 +204,28 @@ I/O, its not just on/off. Its what computers are supposed to do.
 
 #### Extended Operations
 
-   00. pointer\_stack_reverse
+   00. bool pointer\_stack\_reverse(PointerStack)
 
 	  Physically, reverses the order of all elements after "packing" to the current
 	  defined parameters. This operation is not effected by "lock" as it will not
 	  result in an operation that relocates the PointerStack element buffer.<br><br>
 
-   00. pointer\_stack_invert
+   00. bool pointer\_stack\_invert(PointerStack, bool)
 
 	  Mathematically, reverses the order of all elements. This only applies to "peek"
 	  and "poke" operations. For all other operations, reverse the PointerStack.<br>
       <br>
 
-   00. pointer\_stack_void
+   00. bool pointer\_stack\_void(PointerStack, size\_t)
 
 	  Unwind the PointerStack index by a number of items.<br><br>
 
-   00. pointer\_stack_error
+   00. size\_t pointer\_stack\_error(PointerStack)
 
 	  If something went wrong, call this to get the last error. Consequently, clears
 	  the last error.<br><br>
 
-   00. pointer\_stack_license
+   00. char * pointer\_stack\_license(void)
 
 	  Obtains a char * to the license associated with this library for display at the
 	  user's request, or developer's behest.<br><br>
