@@ -67,6 +67,54 @@ design that can be modified readily with backwards compatibility in mind.
 
 ><hr>
 
+#### Optimization
+Optimization takes place in the allocation and deallocation routines. Instead of,
+reallocating the ["stack frame"](http://en.wikipedia.org/wiki/Stack_frame#Structure)
+for each "push" and "pop", space can be automatically reserved or truncated by setting
+up a proper buffering scheme.
+
+   00. bool pointer\_stack\_set\_buffering(PointerStack stack, size\_t size)
+
+	  Sets a value that determines how to buffer the PointerStack. If available space,
+	  reaches zero, and the buffer is not locked or limited, the value provided here
+	  will be pre-allocated. The default is 8 (pointer units).
+	  <br><br>
+
+><hr>
+
+#### Limitations
+From time to time, a stack may be some thing that can only grow to a limited number of
+items, And it may never grow to such a length. For these cases, the following methods
+are provided.
+
+   00. bool pointer\_stack\_set\_limit(PointerStack stack, size\_t)
+
+	  Sets the upper limit on the number of items a stack may contain.<br><br>
+
+   00. size\_t pointer\_stack\_get_limit(PointerStack stack)
+
+	  Obtain the value associated with the PointerStack's upper limit.<br><br>
+
+><hr>
+
+#### Private Data
+From time to time, a PointerStack may require an association of unmanaged data. Such
+as a type descriptor, a procedural header, or anything related to the contents of the
+PointerStack, such as
+[yet another PointerStack](http://en.wikipedia.org/wiki/Associative_array)! For these
+cases, the following methods are provided.
+
+   00. bool pointer\_stack\_set\_private(PointerStack stack, void * data)
+
+	  Writes a private data pointer to the PointerStack object in a reserved location.
+	  <br><br>
+
+   00. void * pointer\_stack\_get\_private(PointerStack stack)
+
+	  Obtain the pointer to the private data.<br><br>
+
+><hr>
+
 #### The Pointers of Stack Management
 You may or may not have, ever heard of "The Pointers of Stack Management". This term
 was coined here by the original project author. Pointers 1-2 are pretty much your
@@ -109,39 +157,6 @@ letter 'P'.
 
 ><hr>
 
-#### Limitations
-From time to time, a stack may be some thing that can only grow to a limited number of
-items, And it may never grow to such a length. For these cases, the following methods
-are provided.
-
-   00. bool pointer\_stack\_set\_limit(PointerStack, size\_t)
-
-	  Sets the upper limit on the number of items a stack may contain.<br><br>
-
-   00. size\_t pointer\_stack\_get_limit(PointerStack)
-
-	  Obtain the value associated with the PointerStack's upper limit.<br><br>
-
-><hr>
-
-#### Private Data
-From time to time, a PointerStack may require an association of unmanaged data. Such
-as a type descriptor, a procedural header, or anything related to the contents of the
-PointerStack, such as
-[yet another PointerStack](http://en.wikipedia.org/wiki/Associative_array)! For these
-cases, the following methods are provided.
-
-   00. bool pointer\_stack\_set\_private(PointerStack stack, void * data)
-
-	  Writes a private data pointer to the PointerStack object in a reserved location.
-	  <br><br>
-
-   00. void * pointer\_stack\_get\_private(PointerStack stack)
-
-	  Obtain the pointer to the private data.<br><br>
-
-><hr>
-
 #### Protection
 Sometimes you need a pointer to a pointer, since we have these, we need a reference 
 counted way to prevent the PointerStack from growing and shrinking. Reallocation 
@@ -153,50 +168,34 @@ limited, lock/unlock, essentially "do nothing", unless the, stack becomes,
 
 	  Always increments the PointerStack lock reference count by 1.<br><br>
 
-   00. bool pointer\_stack\_unlock(PointerStack)
+   00. bool pointer\_stack\_unlock(PointerStack stack)
 
 	  Always decrements the PointerStack lock reference count by 1.<br><br>
 
-   00. size\_t pointer\_stack\_get\_lock(PointerStack)
+   00. size\_t pointer\_stack\_get\_lock(PointerStack stack)
 
 	  Always returns the PointerStack lock reference count.<br><br>
-
-><hr>
-
-#### Optimization
-Optimization takes place in the allocation and deallocation routines. Instead of,
-reallocating the ["stack frame"](http://en.wikipedia.org/wiki/Stack_frame#Structure)
-for each "push" and "pop", space can be automatically reserved or truncated by setting
-up a proper buffering scheme.
-
-   00. pointer\_stack\_set_buffering
-
-	  Sets a value that determines how to buffer the PointerStack. If available space,
-	  reaches zero, and the buffer is not locked or limited, the value provided here
-	  will be pre-allocated. Whenever this value is non-zero, automatic buffering
-	  may take place during push/pop operations. The default is 8 units (pointers).
-	  <br><br>
 
 ><hr>
 
 #### Data I/O
 I/O, its not just on/off. Its what computers are supposed to do.
 
-   00. pointer\_stack\_get_count
+   00. size\_t pointer\_stack\_get\_count(PointerStack stack)
 
 	  Get the number of elements currently in the PointerStack.<br><br>
 
-   00. pointer\_stack_export
+   00. PointerStackExport * pointer\_stack\_export(PointerStack stack, size\_t from, size\_t to)
 
 	  Given a valid range of elements, export returns a
 	  ["plain jane"](http://en.wikipedia.org/wiki/Plain_Jane) newly allocated,
 	  zero terminated, array of pointers which must be freed.<br><br>
 
-   00. pointer\_stack_free
+   00. bool pointer_stack_free(PointerStackExport pointer)
 
 	  Whenever an export is requested, it must be freed by this function.<br><br>
 
-   00. pointer\_stack_import
+   00. pointer\_stack_import ??
 
 	  Given a zero terminated array of pointers, place each pointer on to the top of
 	  the PointerStack.<br><br>
