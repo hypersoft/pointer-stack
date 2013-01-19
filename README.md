@@ -83,13 +83,15 @@ From time to time, a stack may be some thing that can only grow to a limited num
 items, And it may never grow to such a length. For these cases, the following methods
 are provided.
 
-   00. bool pointer\_stack\_set\_limit(PointerStack stack, size\_t)
+   00. bool pointer\_stack\_set\_limit(PointerStack stack, size\_t size)
 
-	  Sets the upper limit on the number of items a stack may contain.<br><br>
+	  If stack is non NULL, sets the limit value on the PointerStack object to limit.
+	  <br><br>
 
    00. size\_t pointer\_stack\_get_limit(PointerStack stack)
 
-	  Obtain the value associated with the PointerStack's upper limit.<br><br>
+	  If stack is non NULL, return the value associated with the PointerStack upper
+	  limit.<br><br>
 
 ><hr>
 
