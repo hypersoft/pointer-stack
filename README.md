@@ -36,37 +36,35 @@ or less "Code Hacker's Tools". Oddly enough, "The Pointers of Stack Management",
 be simply called "The P's of Stack Management" because each operation, begins with the
 letter 'P'.
 
-   1. pointer\_stack_push
+   1. bool pointer\_stack\_push(PointerStack, void *)
 
-	  In order to have a stack, one must have a way to add things to the
-	  stack. "push" provides just such a method.<br><br>
+	  Add a pointer value to the top of the PointerStack. Boolean success.<br><br>
 
-   2. pointer\_stack_pop
+   2. void * pointer\_stack\_pop(PointerStack)
 
-	  The newest additions to the PointerStack, are usually the first to go. "pop"
-	  provides, a way to "git rid" of the last piece added to the PointerStack.
+	  Remove and retrieve the last pointer pushed onto the PointerStack. The item's
+	  index is marked as the next location for a push, but is not 'deleted'.<br><br>
+
+   3. void * pointer\_stack\_peek(PointerStack, size_t)
+
+	  Returns the pointer value in the PointerStack at the given index position, or
+	  -1 if that value cannot be located. -1 Is the sentinel value for all basic return
+	  pointer functions. This is because NULL may actually be the value in the
+	  PointerStack.<br><br>
+
+   4. void * pointer\_stack\_poke(PointerStack, size_t, void *)
+
+	  Poke allows one to both set and retreive the current pointer at a given index. 
 	  <br><br>
 
-   3. pointer\_stack_peek
+   5. bool pointer\_stack\_pack(PointerStack * stack)
 
-	  Expectedly, having a stack isn't worth much if you can't "show off" the
-	  the individual pieces that make one stack whole. "peek" provides just
-	  such a method.<br><br>
+	  Pack reclaims unused pointer indexes. This is not done automatically for
+	  optimal performance. Pack buffers the PointerStack to whatever buffering has
+	  been declared for each PointerStack it is called on. 8 pointers, is the default
+	  buffering for a PointerStack.<br><br>
 
-   4. pointer\_stack_poke
-
-	  Who says "trading up" is pointless? "poke" provides a method to, trade one stack
-	  value with another.<br><br>
-
-   5. pointer\_stack_pack
-
-	  When you "pop" a PointerStack, there is dynamic memory left in its place. This
-	  is what's commonly called a "memory leak", essentially, un-re-claimed data.
-	  Hypersoft PointerStacks are eager to re-use this data. In situations where
-	  re-use of data is favorably unlikely, one may issue a "pack" on a PointerStack,
-	  to make the unused data available to other operations.<br><br>
-
-   6. pointer\_stack_pointer
+   6. void * pointer\_stack\_pointer(PointerStack, size_t)
 
 	  If you need a pointer to a pointer in a PointerStack, this is your man.<br><br>
 
@@ -245,3 +243,4 @@ Notes
 
 
 <div align=center>          :zap: Points of Authority :zap:                     </div>
+let digi see
