@@ -31,6 +31,21 @@ maintain a "naturally ordered collection" of items at runtime.
 ### API Downplay
 <hr>
 
+#### Custom Allocation
+The PointerStack allocator manages data allocation, and streamlines the process of
+tracking the number of distributed allocation units by providing an internal API.
+
+   00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
+
+	  Called to initialize the allocator API, one must provide allocator, deallocator,
+	  and reallocator procedures. The prototype of these procedures must follow the C
+	  standard. If this procedure is not called, the C standard is used for each
+	  procedure. This procedure may not be called after any dynamic data has been
+	  allocated until such time that no data provided by the allocator are allocated.
+	  <br><br>
+
+><hr>
+
 #### Lifecycle
 Procedures in the 'Lifecycle' category, allow you to create a PointerStack, and
 dispose of the same.
@@ -49,21 +64,6 @@ dispose of the same.
 Note: Internally, the API uses PointerStack *, externally the API exposes only a
 void * whose type is defined as a 'PointerStack' This affords us an internal struct
 design that can be modified readily with backwards compatibility in mind. 
-
-><hr>
-
-#### Custom Allocation
-The PointerStack allocator manages data allocation, and streamlines the process of
-tracking the number of distributed allocation units by providing an internal API.
-
-   00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
-
-	  Called to initialize the allocator API, one must provide allocator, deallocator,
-	  and reallocator procedures. The prototype of these procedures must follow the C
-	  standard. If this procedure is not called, the C standard is used for each
-	  procedure. This procedure may not be called after any dynamic data has been
-	  allocated until such time that no data provided by the allocator are allocated.
-	  <br><br>
 
 ><hr>
 
