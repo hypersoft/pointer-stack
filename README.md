@@ -36,23 +36,23 @@ or less "Code Hacker's Tools". Oddly enough, "The Pointers of Stack Management",
 be simply called "The P's of Stack Management" because each operation, begins with the
 letter 'P'.
 
-   1. bool pointer\_stack\_push(PointerStack, void *)
+   1. bool pointer\_stack\_push(PointerStack stack, void * index)
 
 	  Add a pointer value to the top of the PointerStack. Boolean success.<br><br>
 
-   2. void * pointer\_stack\_pop(PointerStack)
+   2. void * pointer\_stack\_pop(PointerStack stack)
 
 	  Remove and retrieve the last pointer pushed onto the PointerStack. The item's
 	  index is marked as the next location for a push, but is not 'deleted'.<br><br>
 
-   3. void * pointer\_stack\_peek(PointerStack, size_t)
+   3. void * pointer\_stack\_peek(PointerStack stack, size_t index)
 
 	  Returns the pointer value in the PointerStack at the given index position, or
 	  -1 if that value cannot be located. -1 Is the sentinel value for all basic return
 	  pointer functions. This is because NULL may actually be the value in the
 	  PointerStack.<br><br>
 
-   4. void * pointer\_stack\_poke(PointerStack, size_t, void *)
+   4. void * pointer\_stack\_poke(PointerStack stack, size_t index, void * pointer)
 
 	  Poke allows one to both set and retreive the current pointer at a given index. 
 	  <br><br>
@@ -64,7 +64,7 @@ letter 'P'.
 	  been declared for each PointerStack it is called on. 8 pointers, is the default
 	  buffering for a PointerStack.<br><br>
 
-   6. void * pointer\_stack\_pointer(PointerStack, size_t)
+   6. void * pointer\_stack\_pointer(PointerStack stack, size_t index)
 
 	  If you need a pointer to a pointer in a PointerStack, this is your man.<br><br>
 
@@ -74,7 +74,7 @@ letter 'P'.
 The core allocator manages data allocation, and streamlines the process of tracking
 the number of distributed allocation units by providing an internal API.
 
-   00. pointer\_stack\_initialize_allocation
+   00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
 
 	  Called to initialize the allocator API, one must provide allocator, deallocator,
 	  and reallocator procedures. The prototype of these procedures must follow the C
@@ -243,4 +243,3 @@ Notes
 
 
 <div align=center>          :zap: Points of Authority :zap:                     </div>
-let digi see
