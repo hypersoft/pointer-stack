@@ -104,12 +104,13 @@ cases, the following methods are provided.
 
    00. bool pointer\_stack\_set\_private(PointerStack stack, void * data)
 
-	  Writes a private data pointer to the PointerStack object in a reserved location.
+	  If stack is non NULL, writes data to the private slot of the stack.
 	  <br><br>
 
    00. void * pointer\_stack\_get\_private(PointerStack stack)
 
-	  Obtain the pointer to the private data.<br><br>
+	  If stack is non NULL, returns the private data pointer previously set, or NULL.
+	  <br><br>
 
 ><hr>
 
