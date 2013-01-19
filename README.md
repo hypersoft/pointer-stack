@@ -51,18 +51,16 @@ dispose of the same.
 
    00. PointerStack pointer\_stack\_create(void)
 
-	  Creates a new empty PointerStack and returns a * to the desired object type.
+	  Creates a new empty PointerStack object fully initialized with a buffer size
+	  of 8 pointer values.
 	  <br><br>
 
    00. bool pointer\_stack\_dispose(PointerStack stack)
 
-	  Attempts to "release" a PointerStack object. The object may not be released, if
-	  it does not exist or is locked. The return value always reflects the success of
-	  the intended operation.<br><br>
-
-Note: Internally, the API uses PointerStack *, externally the API exposes only a
-void * whose type is defined as a 'PointerStack' This affords us an internal struct
-design that can be modified readily with backwards compatibility in mind. 
+	  Attempts to "release" a PointerStack object. If stack is NULL, or locked, the
+	  operation will fail. If the buffer that holds the pointers (the actual stack),
+	  is defined, that buffer will be freed. Finally the PointerStack object is freed.
+	  <br><br>
 
 ><hr>
 
