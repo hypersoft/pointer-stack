@@ -28,6 +28,26 @@ maintain a "naturally ordered collection" of items at runtime.
 
 ><hr>
 
+### API Downplay
+<hr>
+
+#### Lifecycle
+Procedures in the 'Lifecycle' category, allow you to create a PointerStack, and
+dispose of the same.
+
+   00. PointerStack pointer\_stack\_create(void)
+
+	  Creates a new empty PointerStack and returns a * to the desired object type.
+	  <br><br>
+
+   00. bool pointer\_stack\_dispose(PointerStack * stack)
+
+	  Attempts to "release" a PointerStack object. The object may not be released, if
+	  it does not exist or is locked. The return value always reflects the success of
+	  the intended operation.<br><br>
+
+><hr>
+
 #### The Pointers of Stack Management
 You may or may not have, ever heard of "The Pointers of Stack Management". This term
 was coined here by the original project author. Pointers 1-2 are pretty much your
@@ -82,18 +102,6 @@ the number of distributed allocation units by providing an internal API.
 	  procedure. This procedure may not be called after any dynamic data has been
 	  allocated until such time that no data provided by the allocator are allocated.
 	  <br><br>
-
-><hr>
-
-#### Lifecycle
-
-   00. pointer\_stack_create
-
-	  Creates a new empty PointerStack.<br><br>
-
-   00. pointer\_stack_dispose
-
-	  Attempts to "release" a PointerStack object.<br><br>
 
 ><hr>
 
