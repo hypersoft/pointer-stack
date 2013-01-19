@@ -96,7 +96,7 @@ letter 'P'.
 	  Poke allows one to both set and retreive the current pointer at a given index. 
 	  <br><br>
 
-   5. bool pointer\_stack\_pack(PointerStack * stack)
+   5. bool pointer\_stack\_pack(PointerStack stack)
 
 	  Pack reclaims unused pointer indexes. This is not done automatically for
 	  optimal performance. Pack buffers the PointerStack to whatever buffering has

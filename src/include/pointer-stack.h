@@ -48,7 +48,7 @@
 	extern void * pointer_stack_pop(PointerStack);
 	extern void * pointer_stack_peek(PointerStack, size_t);
 	extern void * pointer_stack_poke(PointerStack, size_t, void *);
-	extern bool   pointer_stack_pack(PointerStack * stack);
+	extern bool   pointer_stack_pack(PointerStack stack);
 	extern void * pointer_stack_pointer(PointerStack, size_t);
 
 	/* allocation */
