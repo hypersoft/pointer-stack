@@ -122,9 +122,20 @@ or less "Code Hacker's Tools". Oddly enough, "The Pointers of Stack Management",
 be simply called "The P's of Stack Management" because each operation, begins with the
 letter 'P'.
 
+For the following operations only, you need to observe this ground rule for any
+procedure returning a pointer value:
+
+* You cannot push a pointer value of -1. That's because -1 is a reserved value to 
+  indicate an API error!
+
+
    1. bool pointer\_stack\_push(PointerStack stack, void * pointer)
 
-	  Add a pointer value to the top of the PointerStack. Boolean success.<br><br>
+	  If stack is null or pointer is -1 the procedure returns false. If the stack data
+	  is NULL (non existant) the stack will be buffered according to 1 + the buffer
+	  value defined on the PointerStack. If there are no pointer slots available due
+	  to a lock or limit, the procedure returns false, or allocates any needed space.
+	  The pointer is then pushed to the stack and the operation returns true.<br><br>
 
    2. void * pointer\_stack\_pop(PointerStack stack)
 

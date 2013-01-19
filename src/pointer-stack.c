@@ -80,12 +80,9 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
-	// dont allow the user to push a sentinel
-	if (pointer == PS_ACTION_NULL) return false;
+	if ( ! HavePointerStack || pointer == PS_ACTION_NULL ) return false;
 
 	size_t units = 0;
-
-	if ( ! HavePointerStack ) return false;
 
 	if ( ! HavePointerStackData ) {
 		units = (1 + stack->buffer);
