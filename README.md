@@ -28,7 +28,7 @@ maintain a "naturally ordered collection" of items at runtime.
 
 ><hr>
 
-### API Downplay
+## API Overview
 <hr>
 
 #### Custom Allocation
@@ -37,11 +37,10 @@ tracking the number of distributed allocation units by providing an internal API
 
    00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
 
-	  Called to initialize the allocator API, one must provide allocator, deallocator,
-	  and reallocator procedures. The prototype of these procedures must follow the C
-	  standard. If this procedure is not called, the C standard is used for each
-	  procedure. This procedure may not be called after any dynamic data has been
-	  allocated until such time that no data provided by the allocator are allocated.
+	  If no dynamic data is allocated for this library, then for each non null
+	  memory managment procedure prototype (malloc, realloc, free) assign the provided
+	  pointer to an internal symbol table that will be used for all memory allocation
+	  operations.
 	  <br><br>
 
 ><hr>
