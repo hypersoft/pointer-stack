@@ -52,6 +52,21 @@ design that can be modified readily with backwards compatibility in mind.
 
 ><hr>
 
+#### Custom Allocation
+The PointerStack allocator manages data allocation, and streamlines the process of
+tracking the number of distributed allocation units by providing an internal API.
+
+   00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
+
+	  Called to initialize the allocator API, one must provide allocator, deallocator,
+	  and reallocator procedures. The prototype of these procedures must follow the C
+	  standard. If this procedure is not called, the C standard is used for each
+	  procedure. This procedure may not be called after any dynamic data has been
+	  allocated until such time that no data provided by the allocator are allocated.
+	  <br><br>
+
+><hr>
+
 #### The Pointers of Stack Management
 You may or may not have, ever heard of "The Pointers of Stack Management". This term
 was coined here by the original project author. Pointers 1-2 are pretty much your
@@ -91,21 +106,6 @@ letter 'P'.
    6. void * pointer\_stack\_pointer(PointerStack stack, size_t index)
 
 	  If you need a pointer to a pointer in a PointerStack, this is your man.<br><br>
-
-><hr>
-
-#### Core Allocator
-The core allocator manages data allocation, and streamlines the process of tracking
-the number of distributed allocation units by providing an internal API.
-
-   00. pointer\_stack\_initialize_allocation(PointerStackAllocator create, PointerStackReallocator resize, PointerStackDeallocator destroy)
-
-	  Called to initialize the allocator API, one must provide allocator, deallocator,
-	  and reallocator procedures. The prototype of these procedures must follow the C
-	  standard. If this procedure is not called, the C standard is used for each
-	  procedure. This procedure may not be called after any dynamic data has been
-	  allocated until such time that no data provided by the allocator are allocated.
-	  <br><br>
 
 ><hr>
 
