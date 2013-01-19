@@ -114,11 +114,11 @@ From time to time, a stack may be some thing that can only grow to a limited num
 items, And it may never grow to such a length. For these cases, the following methods
 are provided.
 
-   00. pointer\_stack\_set_limit
+   00. bool pointer\_stack\_set\_limit(PointerStack, size\_t)
 
-	  Truncates data, packs stack as well.<br><br>
+	  Sets the upper limit on the number of items a stack may contain.<br><br>
 
-   00. pointer\_stack\_get_limit
+   00. size\_t pointer\_stack\_get_limit(PointerStack)
 
 	  Obtain the value associated with the PointerStack's upper limit.<br><br>
 
@@ -131,11 +131,12 @@ PointerStack, such as
 [yet another PointerStack](http://en.wikipedia.org/wiki/Associative_array)! For these
 cases, the following methods are provided.
 
-   00. pointer\_stack\_set_private
+   00. bool pointer\_stack\_set\_private(PointerStack stack, void * data)
 
-	  Overwrites current if any.<br><br>
+	  Writes a private data pointer to the PointerStack object in a reserved location.
+	  <br><br>
 
-   00. pointer\_stack\_get_private
+   00. void * pointer\_stack\_get\_private(PointerStack stack)
 
 	  Obtain the pointer to the private data.<br><br>
 
@@ -148,17 +149,17 @@ sometimes transfers the PointerStack data to a new location. Whenever, a stack i
 limited, lock/unlock, essentially "do nothing", unless the, stack becomes, 
 "unlimited".
 
-   00. pointer\_stack_lock
+   00. bool pointer\_stack\_lock(PointerStack stack)
 
-	  Always increments the lock reference count by 1.<br><br>
+	  Always increments the PointerStack lock reference count by 1.<br><br>
 
-   00. pointer\_stack_unlock
+   00. bool pointer\_stack\_unlock(PointerStack)
 
-	  Always decrements the lock reference count by 1.<br><br>
+	  Always decrements the PointerStack lock reference count by 1.<br><br>
 
-   00. pointer\_stack\_get_lock
+   00. size\_t pointer\_stack\_get\_lock(PointerStack)
 
-	  Always returns the lock reference count.<br><br>
+	  Always returns the PointerStack lock reference count.<br><br>
 
 ><hr>
 

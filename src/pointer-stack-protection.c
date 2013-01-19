@@ -4,9 +4,9 @@
 
 /* Provides API:
 
-	extern bool   pointer_stack_unlock(PointerStack * stack);
-	extern bool   pointer_stack_lock(PointerStack * stack);
-	extern size_t pointer_stack_get_lock(PointerStack * stack);
+	extern bool   pointer_stack_unlock(PointerStack);
+	extern bool   pointer_stack_lock(PointerStack);
+	extern size_t pointer_stack_get_lock(PointerStack);
 
 */
 
