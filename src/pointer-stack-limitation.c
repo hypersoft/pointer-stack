@@ -26,7 +26,7 @@ bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
 			stack->index = stack->units = limit;
 
 			// shrink wrap it...
-			stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+			stack->item = pointer_stack_allocator_resize(stack->item, stack->units * sizeof(void *));
 
 		}
 
