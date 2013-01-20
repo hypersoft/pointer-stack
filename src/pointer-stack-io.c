@@ -34,7 +34,7 @@ size_t pointer_stack_get_slots(PointerStack * stack) {
 /* Deallocate export storage */
 bool pointer_stack_free(PointerStackExport * block) {
 	if (block) { 
-		pointer_stack_release(block); return true;
+		pointer_stack_allocator_release(block); return true;
 	} return false;
 }
 

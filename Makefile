@@ -17,6 +17,8 @@ ${SHAREDBIN}/libpointerstack.so.1.0.1: ${SOURCES}
 static: ${STATICBIN}/libpointerstack.a
 shared: ${SHAREDBIN}/libpointerstack.so.1.0.1
 
+test: ${STATICBIN}/libpointerstack.a
+	@gcc src/test/ps-test.c -o bin/test ${STATICBIN}/libpointerstack.a
 # The following only works for default builds and WILL kill anything that looks like:
 # libpointerstack.
 clean:
