@@ -20,7 +20,7 @@ bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
 
 	if (HavePointerStack) {
 
-		if ( limit && HaveStackData && (stack->units > limit) ) {
+		if ( limit && HavePointerStackData && (stack->units > limit) ) {
 
 			// truncate instruction.
 			stack->index = stack->units = limit;

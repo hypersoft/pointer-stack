@@ -15,7 +15,7 @@
 */
 
 // we import this here to avoid having to deal with buffering code that's already been written..
-extern bool   pointer_stack_push(PointerStack, void *);
+extern bool   pointer_stack_push(PointerStack *, void *);
 
 typedef void PointerStackExport;
 
