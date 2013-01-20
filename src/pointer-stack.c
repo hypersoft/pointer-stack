@@ -25,7 +25,6 @@
 #define HavePointerStackSlot stack->index < stack->units
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
-#define PointerStackIsGrowable ! stack->lock && ! stack->limit
 #define PointerStackIsBuffered stack->buffer
 #define PointerStackIsInverted stack->inverted
 
@@ -80,19 +79,26 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
-	if ( ! HavePointerStack || pointer == PS_ACTION_NULL ) return false;
+	if ( ! HavePointerStack || pointer == PS_ACTION_NULL || PointerStackIsLocked return false;
 
-	size_t units = 0;
+	size_t units = (1 + stack->units);
 
 	if ( ! HavePointerStackData ) {
-		units = (1 + stack->buffer);
+		units += stack->buffer;
+		if ( stack->limit && units > stack->limit ) {
+			units -= stack->limit;
+			if ( ! units ) return false;
+		}
 		stack->item = pointer_stack_allocator_lease(units * sizeof(void *));
 		stack->units = units;
 	}
 
 	if ( ! HavePointerStackSlot ) { 
-		if ( ! PointerStackIsGrowable ) return false;
-		units = (1 + stack->units + stack->buffer);
+		units += (stack->buffer);
+		if ( stack->limit && units > stack->limit ) {
+			units -= stack->limit;
+			if ( ! units ) return false;
+		}
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 		stack->units = units;
 	}
@@ -143,7 +149,13 @@ bool pointer_stack_pack(PointerStack * stack) {
 	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
 
 	size_t units = (stack->index + stack->buffer);
-	void * pointer = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+	
+	if ( stack->limit && units > stack->limit ) {
+		units -= stack->limit;
+		if ( ! units ) return false;
+	}
+
+	stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	stack->units = units;
 
 	return true;
