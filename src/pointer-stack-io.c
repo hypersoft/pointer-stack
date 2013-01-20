@@ -14,6 +14,9 @@
  
 */
 
+// we import this here to avoid having to deal with buffering code that's already been written..
+extern bool   pointer_stack_push(PointerStack, void *);
+
 typedef void PointerStackExport;
 
 /* Get the count of elements in a PointerStack */
@@ -47,6 +50,7 @@ PointerStackExport * pointer_stack_export(PointerStack * stack, size_t from, siz
 }
 
 bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
+	// this could be optimized with a proper temporary buffer setting and some calcs..
 	bool result;
 	while (item[begin] && begin <= end && (result = pointer_stack_push(stack, item[begin++])));
 	return result;
