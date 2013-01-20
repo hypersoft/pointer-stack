@@ -9,9 +9,7 @@
 	extern bool   pointer_stack_free(PointerStackExport);
 
 	extern PointerStackExport * pointer_stack_export(PointerStack, size_t, size_t);
-
-	extern bool pointer_stack_import *
-
+	extern bool pointer_stack_import(PointerStack, void **, size_t, size_t);
 	Note: Items marked with an asterisk have not yet been implemented.
  
 */
@@ -48,3 +46,8 @@ PointerStackExport * pointer_stack_export(PointerStack * stack, size_t from, siz
 	return export;
 }
 
+bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
+	bool result;
+	while (item[begin] && begin <= end && (result = pointer_stack_push(stack, item[begin++])));
+	return result;
+}
