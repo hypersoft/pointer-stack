@@ -16,7 +16,7 @@ PointerStack * pointer_stack_create(void) {
 
 	if (result) {
 		memset(result, 0, sizeof(PointerStack));
-		result->buffer = 8;
+		result->buffer = 7; // push adds 1, so this balances the equation
 	}
 
 	return result;
