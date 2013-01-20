@@ -79,7 +79,7 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
-	if ( ! HavePointerStack || pointer == PS_ACTION_NULL || PointerStackIsLocked return false;
+	if ( ! HavePointerStack || pointer == PS_ACTION_NULL || PointerStackIsLocked) return false;
 
 	size_t units = (1 + stack->units);
 
