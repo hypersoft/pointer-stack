@@ -15,13 +15,29 @@ size_t pointer_stack_get_limit(PointerStack * stack) {
 	return 0;
 }
 
-/* set the private data associated with a PointerStack */
+/* set the data limit associated with a PointerStack */
 bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
+
 	if (HavePointerStack) {
-		if (limit && stack->buffer > limit) stack->buffer = limit;
+
+		if ( limit && HaveStackData && (stack->units > limit) ) {
+
+			// truncate instruction.
+			stack->index = stack->units = limit;
+
+			// shrink wrap it...
+			stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+
+		}
+
+		// set the limit
 		stack->limit = limit;
+
 		return true;
+
 	}
+
 	return false;
+
 }
 
