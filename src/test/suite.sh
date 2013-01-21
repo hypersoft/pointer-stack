@@ -43,7 +43,7 @@ while read label; do
 
 	let count++;
  
-	if (( DEAD == 1 )); then let count++; let fail++; continue; fi;
+	if (( DEAD == 1 )); then let fail++; continue; fi;
 
 	if source <(echo "$code"); then
 
