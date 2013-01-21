@@ -21,7 +21,7 @@
 declare -i succeed=0 fail=0 count=0;
 
 declare -i FATAL=0; # set this to 1 at the head of a test to break all further tests.
-
+declare -i INDENT=0; # set this to the number of spaces you want test case output indented.
 declare -i DEAD=0; # Internal use only, we use this to skip further testing, but count all failures.
 
 [[ -t 1 ]] && { # output is terminal... color it!
@@ -49,10 +49,12 @@ while read label; do
 
 	if source <(echo "$code"); then
 
+		printf '%*s' $INDENT;
 		echo Test case: "$label" $succeeded; let succeed++;
 
 	else
 
+		printf '%*s' $INDENT;
 		echo Test case: "$label" $failed; let fail++;
 
 		if (( FATAL )); then 
