@@ -38,6 +38,8 @@ echo '';
 
 while read label; do
 
+	[[ -z "$label" ]] && continue; # permit whitespace
+
 	read code;
 
 	if [[ "$label" == shell ]]; then
