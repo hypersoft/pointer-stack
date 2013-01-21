@@ -13,7 +13,7 @@
 # Generally, all you need to do is write your test application, and pipe the prescribed
 # format of data into the shell script.
 
-The exit status reflects how many tests failed.
+# The exit status reflects how many tests failed.
 
 declare -i succeed=0 fail=0 count=0;
 
