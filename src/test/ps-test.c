@@ -3,14 +3,14 @@
 
 #include "../include/pointer-stack.h"
 
-char buffer[1024];
+char buffer[1024]; // adjust this as needed.
 
 void write_test(char * label, char * format, ...) {
 
 	puts(label);
 
     va_list args; va_start(args, format);
-	vsnprintf(buffer, 1024, format, args);
+	vsnprintf(buffer, sizeof(buffer), format, args);
 
 	puts(buffer);
 
