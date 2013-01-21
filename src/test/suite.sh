@@ -24,11 +24,11 @@ echo '';
 while read label; do
 	let count++;
 	read code;
-	source <(echo $code) || {
-		echo Test case $label: failed;
+	source <(echo "$code") || {
+		echo Test case "$label": failed;
 		let fail++;
 	} && {
-		echo Test case $label: succeeded;
+		echo Test case "$label": succeeded;
 		let succeed++;
 	}
 done;
