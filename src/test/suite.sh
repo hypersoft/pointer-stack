@@ -60,13 +60,11 @@ while read label; do
 	if [[ "$label" == shell ]]; then
 		if (( DEAD == 1 )); then continue; fi;
 		# shell code section
-		source <(echo "$code"); continue;
-		if (( SCRIPTING )); then
-			while (( SCRIPTING )); do
-				read -r code;
-				source <(echo "$code");
-			done;
-		fi;
+		source <(echo "$code");
+		while (( SCRIPTING )); do
+			read -r code; . <(echo "$code");
+		done;
+		continue;
 	fi;
 
 	let count++;

@@ -5,6 +5,8 @@
 
 char buffer[1024]; // adjust this as needed.
 
+/* TEST SUITE HELPERS */
+
 void write_test(char * label, char * format, ...) {
 
 	puts(label);
@@ -16,17 +18,25 @@ void write_test(char * label, char * format, ...) {
 
 }
 
-void write_script(char * script) { // this will screw up testing if the script is multiline!
-	write_test("shell", "%s", script);
+// this will screw up testing if the script is multiline!
+void write_script(char * script) {
+	write_test("shell", "scripting.code;\n%s\nscripting.ends;", script);
 }
 
 void write_break() {
 	write_script("echo '';");
 }
 
+void fatal_errors(bool active) {
+	if (active) write_script("error.fatal");
+	else write_script("error.normal");
+}
+
 void set_case_indent(int spaces) {
 	write_test("shell", "INDENT=%i;", spaces);
 }
+
+/* END TEST SUITE HELPERS */
 
 void test_optimization() {
 
@@ -90,12 +100,16 @@ void test_create_pointer_stack() {
 
 	PointerStack stack = pointer_stack_create();
 
-	write_script("echo 'Lifecycle operation tests';");
+	fatal_errors(true);
 
-	write_break(); set_case_indent(4);
-	write_test("Create PointerStack....", "FATAL=1; [[ %li != 0 ]]", (long int) stack);
-	write_test("Dispose PointerStack...", "FATAL=1; [[ %i  != 0 ]]" , pointer_stack_dispose(stack));
+	write_script("echo -e 'Lifecycle operation tests\\n';");
+
+	set_case_indent(4);
+	write_test("Create PointerStack....", "[[ %li != 0 ]]", (long int) stack);
+	write_test("Dispose PointerStack...", "[[ %i  != 0 ]]", pointer_stack_dispose(stack));
 	set_case_indent(0);
+
+	fatal_errors(false);
 
 }
 
