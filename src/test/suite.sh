@@ -7,11 +7,15 @@
 # This is a bash script that reads a label for the test from stdin, then reads a line
 # of shell code to test for success/fail. The process is repeated for each test.
 
+# This is an advanced shell script, as each shell code is sourced into the shell,
+# rather than evaluated.
+
 # A label of `shell' causes testing to be bypassed, and code to be run. This is mostly
 # useful for printing messages, modifying environment, etc..
 
-# This is an advanced shell script, as each shell code is sourced into the shell,
-# rather than evaluated.
+# A label of `echo' causes testing to be bypassed, and the code to be echoed to stdout.
+
+# A label of `printf' causes testing to be bypassed, and code to be passed to printf.
 
 # Generally, all you need to do is write your test application, and pipe the prescribed
 # format of data into the shell script.
