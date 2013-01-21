@@ -47,19 +47,57 @@ void fatal_errors(bool active) {
 
 /* END TEST SUITE HELPERS */
 
-void test_optimization() {
+void test_main() {
 
-	new_group("Optimization tests");
+	bool test = false;
+
+	new_group("General operation tests");
 
 	PointerStack stack = pointer_stack_create();
 
-	write_test("PointerStack Get Buffering", "[[ %li == %li ]]", pointer_stack_get_buffering(stack), 7);
+	test = pointer_stack_pack(stack); // need to cache this, dual procedure parameter calls dependent on each other might not work out!
+
+	write_test("PointerStack Pack (buffer)..................", "[[ %i == 1 && %li == %li ]]", test, pointer_stack_get_units(stack), 8);
+	write_test("PointerStack Push...........................", "[[ %i == 1 ]]", pointer_stack_push(stack, buffer));
+	write_test("PointerStack Pointer........................", "[[ '%p' == '%p' ]]", * pointer_stack_pointer(stack, 0), buffer);
+	write_test("PointerStack Peek...........................", "[[ '%p' == '%p' ]]",   pointer_stack_peek(stack, 0), buffer);
+	write_test("PointerStack Poke...........................", "[[ '%p' == '%p' ]]",   pointer_stack_poke(stack, 0, NULL), buffer);
+	write_test("PointerStack Pop............................", "[[ '%p' == '%p' ]]",   pointer_stack_pop(stack), NULL);
+	write_test("PointerStack Pack (false)...................", "[[ %i == 0 ]]", pointer_stack_pack(stack));
+	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
+	write_test("PointerStack Pop (Return PS_ACTION_NULL)....", "[[ '%p' == '%p' ]]", pointer_stack_pop(stack), PS_ACTION_NULL);
+	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
+	write_test("PointerStack Push (Reject PS_ACTION_NULL)...", "[[ %i != 1 ]]", pointer_stack_push(stack, (void *) -1));
+	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
 
 	pointer_stack_dispose(stack);
 
 	end_group();
 
 }
+
+void test_extended() {
+
+	new_group("Extended operation tests");
+
+	PointerStack stack = pointer_stack_create();
+	pointer_stack_push(stack, buffer);
+	pointer_stack_push(stack, pointer_stack_license());
+
+	bool status = pointer_stack_reverse(stack);
+
+	write_test("PointerStack Reverse...", "[[ %i == 1 && '%p' == '%p' ]]", status, pointer_stack_pop(stack), buffer);
+	status = pointer_stack_invert(stack, true);
+	write_test("PointerStack Invert....", "[[ %i == 1 && '%p' == '%p' ]]", status, pointer_stack_peek(stack, 0), buffer);
+	status = pointer_stack_void(stack, 1);
+	write_test("PointerStack Void......", "[[ %i == 1 && %i == 0 ]]", status, pointer_stack_get_count(stack));
+
+	pointer_stack_dispose(stack);
+
+	end_group();
+
+}
+
 
 void test_io() {
 
@@ -78,28 +116,14 @@ void test_io() {
 
 }
 
-void test_main() {
+void test_optimization() {
 
-	bool test = false;
-
-	new_group("General operation tests");
+	new_group("Optimization tests");
 
 	PointerStack stack = pointer_stack_create();
 
-	test = pointer_stack_pack(stack); // need to pre-cache this, dual procedure parameter calls dependent on each other might not work out!
-
-	write_test("PointerStack Pack (buffer)..................", "[[ %i == 1 && %li == %li ]]", test, pointer_stack_get_units(stack), 8);
-	write_test("PointerStack Push...........................", "[[ %i == 1 ]]", pointer_stack_push(stack, buffer));
-	write_test("PointerStack Pointer........................", "[[ '%p' == '%p' ]]", * pointer_stack_pointer(stack, 0), buffer);
-	write_test("PointerStack Peek...........................", "[[ '%p' == '%p' ]]",   pointer_stack_peek(stack, 0), buffer);
-	write_test("PointerStack Poke...........................", "[[ '%p' == '%p' ]]",   pointer_stack_poke(stack, 0, NULL), buffer);
-	write_test("PointerStack Pop............................", "[[ '%p' == '%p' ]]",   pointer_stack_pop(stack), NULL);
-	write_test("PointerStack Pack (false)...................", "[[ %i == 0 ]]", pointer_stack_pack(stack));
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
-	write_test("PointerStack Pop (Return PS_ACTION_NULL)....", "[[ '%p' == '%p' ]]", pointer_stack_pop(stack), PS_ACTION_NULL);
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
-	write_test("PointerStack Push (Reject PS_ACTION_NULL)...", "[[ %i != 1 ]]", pointer_stack_push(stack, (void *) -1));
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
+	write_test("PointerStack Set Buffering", "[[ %i == 1 ]]", pointer_stack_set_buffering(stack, 16));
+	write_test("PointerStack Get Buffering", "[[ %li == %li ]]", pointer_stack_get_buffering(stack), 16);
 
 	pointer_stack_dispose(stack);
 
@@ -125,6 +149,7 @@ void test_create_pointer_stack() {
 int main() {
 	test_create_pointer_stack();
 	test_main();
+	test_extended();
 	test_io();
 	test_optimization();
 	return 0;
