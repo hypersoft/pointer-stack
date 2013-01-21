@@ -25,10 +25,10 @@ while read label; do
 	let count++;
 	read code;
 	source <(echo $code) || {
-		echo test case $label: failed;
+		echo Test case $label: failed;
 		let fail++;
 	} && {
-		echo test case $label: succeeded;
+		echo Test case $label: succeeded;
 		let succeed++;
 	}
 done;
@@ -38,6 +38,7 @@ echo '';
 echo $succeed/$count succeeded.
 echo $fail/$count failed.
 echo '';
+
 } >&2;
 
 exit $fail;
