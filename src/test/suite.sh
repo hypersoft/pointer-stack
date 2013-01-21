@@ -37,11 +37,11 @@ while read label; do
 
 	FATAL=0; # reset FATAL flag
 
-	source <(echo "$code") && {
+	if source <(echo "$code"); then
 
 		echo Test case: "$label" $succeeded; let succeed++;
 
-	} || {
+	else
 
 		echo Test case: "$label" $failed; let fail++;
 
@@ -50,7 +50,7 @@ while read label; do
 			let DEAD=1; # set all operations further, fail
 		fi;
 
-	}
+	fi;
 
 done;
 
