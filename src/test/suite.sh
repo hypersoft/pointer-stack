@@ -4,8 +4,16 @@
 
 # Copyright 2013, Triston J. Taylor, All rights reserved
 
-# To use this script, simply pipe in a label for your test, and issue a shell statement
-# that should succeed for each test.
+# This is a bash script that reads a label for the test from stdin, then reads a line
+# of shell code to test for success/fail. The process is repeated for each test.
+
+# This is an advanced shell script, as each shell code is sourced into the shell,
+# rather than evaluated.
+
+# Generally, all you need to do is write your test application, and pipe the prescribed
+# format of data into the shell script.
+
+The exit status reflects how many tests failed.
 
 declare -i succeed=0 fail=0 count=0;
 
