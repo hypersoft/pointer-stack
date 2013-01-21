@@ -26,7 +26,7 @@ ${SHAREDLIB}: ${SOURCES}
 static: ${STATICLIB}
 shared: ${SHAREDLIB}
 
-${STATICBIN}/test: ${STATICLIB}
+${STATICBIN}/test: ${STATICLIB} src/test/ps-test.c
 	@echo Building test application..
 	@gcc src/test/ps-test.c -o ${STATICBIN}/test ${STATICLIB}
 	@echo ''
