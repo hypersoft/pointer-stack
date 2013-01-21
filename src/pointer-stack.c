@@ -4,12 +4,12 @@
 
 /* Provides API:
 
-	extern bool   pointer_stack_push(PointerStack, void *);
-	extern void * pointer_stack_pop(PointerStack);
-	extern void * pointer_stack_peek(PointerStack, size_t);
-	extern void * pointer_stack_poke(PointerStack, size_t, void *);
-	extern bool   pointer_stack_pack(PointerStack stack);
-	extern void * pointer_stack_pointer(PointerStack, size_t);
+	extern bool    pointer_stack_push(PointerStack, void *);
+	extern void *  pointer_stack_pop(PointerStack);
+	extern void *  pointer_stack_peek(PointerStack, size_t);
+	extern void *  pointer_stack_poke(PointerStack, size_t, void *);
+	extern bool    pointer_stack_pack(PointerStack stack);
+	extern void ** pointer_stack_pointer(PointerStack, size_t);
 
 */
 
@@ -163,7 +163,7 @@ bool pointer_stack_pack(PointerStack * stack) {
 
 }
 
-void * pointer_stack_pointer(PointerStack * stack, size_t index) {
+void ** pointer_stack_pointer(PointerStack * stack, size_t index) {
 
 	void * pointer = PS_ACTION_NULL;
 
