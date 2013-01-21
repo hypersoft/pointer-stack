@@ -22,6 +22,7 @@
 // test case macros, assuming stack is type of PointerStack
 #define HavePointerStack stack
 #define HavePointerStackData stack->item
+#define HavePointerStackItem stack->index
 #define HavePointerStackSlot stack->units > stack->index
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
@@ -111,7 +112,7 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 /* Pop item off of stack top */
 void * pointer_stack_pop(PointerStack * stack) {
 	void * pointer = PS_ACTION_NULL;
-	if (HavePointerStack && HavePointerStackData)
+	if (HavePointerStack && HavePointerStackData && HavePointerStackItem)
 		pointer = stack->item[--stack->index];
 	return pointer;
 }
