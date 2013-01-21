@@ -22,7 +22,7 @@
 // test case macros, assuming stack is type of PointerStack
 #define HavePointerStack stack
 #define HavePointerStackData stack->item
-#define HavePointerStackSlot stack->index < stack->units
+#define HavePointerStackSlot stack->units > stack->index
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
 #define PointerStackIsBuffered stack->buffer

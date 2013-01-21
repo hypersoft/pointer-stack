@@ -4,7 +4,8 @@
 
 /* Provides API:
 
-	extern bool pointer_stack_set_buffering(PointerStack, size_t);
+	extern bool   pointer_stack_set_buffering(PointerStack, size_t);
+	extern size_t pointer_stack_get_buffering(PointerStack);
  
 */
 
@@ -14,3 +15,7 @@ bool pointer_stack_set_buffering(PointerStack * stack, size_t size) {
 	return false;
 }
 
+size_t pointer_stack_get_buffering(PointerStack * stack) {
+	if ( ! HavePointerStack) return 0;
+	return stack->buffer;	
+}
