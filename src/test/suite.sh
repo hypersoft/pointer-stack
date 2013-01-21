@@ -25,13 +25,13 @@ declare -i INDENT=0; # set this to the number of spaces you want test case outpu
 declare -i DEAD=0; # Internal use only, we use this to skip further testing, but count all failures.
 declare -i SCRIPTING=0; # set this to 1 to enter a read, execute loop, from within a shell code section
 
+declare ACTION='Test case:'
+
 [[ -t 1 ]] && { # output is terminal... color it!
 	declare failed="$(tput bold)$(tput setf 4)[failed]$(tput sgr0)" succeeded="$(tput bold)$(tput setf 2)[succeeded]$(tput sgr0)"
 } || { # output other...
 	declare failed='[failed]' succeeded='[succeeded]'
 }
-
-echo '';
 
 # You can call on the following from any code section to switch on/off fatalaties
 error.fatal() {
@@ -75,12 +75,12 @@ while read label; do
 
 		# FATAL=0; # deprecated, must be manually reset to improve code flow
 		printf '%*s' $INDENT;
-		echo Test case: "$label" $succeeded; let succeed++;
+		echo ${ACTION} "$label" $succeeded; let succeed++;
 
 	else
 
 		printf '%*s' $INDENT;
-		echo Test case: "$label" $failed; let fail++;
+		echo ${ACTION} "$label" $failed; let fail++;
 
 		if (( FATAL )); then 
 			echo $'\nImperative test failure in' $label;
