@@ -49,6 +49,7 @@ while read label; do
 
 	if source <(echo "$code"); then
 
+		FATAL=0;
 		printf '%*s' $INDENT;
 		echo Test case: "$label" $succeeded; let succeed++;
 
