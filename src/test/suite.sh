@@ -17,6 +17,12 @@
 
 declare -i succeed=0 fail=0 count=0;
 
+[[ -t 1 ]] && { # output is terminal... color it!
+	declare failed="$(tput bold)$(tput setf 2)[failed]$(tput sgr0)" succeeded="$(tput bold)$(tput setf 2)[succeeded]$(tput sgr0)"
+} || { # output other...
+	declare failed='[failed]' succeeded='[succeeded]'
+}
+
 { # everything in this block goes to stderr..
 
 echo '';
@@ -25,10 +31,10 @@ while read label; do
 	let count++;
 	read code;
 	source <(echo "$code") || {
-		echo Test case "$label": failed;
+		echo Test case: "$label" $failed;
 		let fail++;
 	} && {
-		echo Test case "$label": succeeded;
+		echo Test case: "$label" $succeeded;
 		let succeed++;
 	}
 done;
