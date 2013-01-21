@@ -9,7 +9,7 @@
 
 declare -i succeed=0 fail=0 count=0;
 
-while read label; do {
+while read label; do
 	let count++;
 	read code;
 	source <(echo $code) || {
@@ -19,7 +19,7 @@ while read label; do {
 		echo test case $label: succeeded;
 		let succeed++;
 	}
-}
+done;
 
 echo '';
 echo $success/$count succeeded.
