@@ -41,6 +41,16 @@ while read label; do
 		source <(echo "$code"); continue;
 	fi;
 
+	if [[ "$label" == echo ]]; then
+		if (( DEAD == 1 )); then continue; fi;
+		echo "$code"; continue;
+	fi;
+
+	if [[ "$label" == printf ]]; then
+		if (( DEAD == 1 )); then continue; fi;
+		printf $code; continue;
+	fi;
+
 	let count++;
  
 	if (( DEAD == 1 )); then let fail++; continue; fi;
