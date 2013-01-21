@@ -7,6 +7,9 @@
 # This is a bash script that reads a label for the test from stdin, then reads a line
 # of shell code to test for success/fail. The process is repeated for each test.
 
+# A label of `shell' causes testing to be bypassed, and code to be run. This is mostly
+# useful for printing messages, modifying environment, etc..
+
 # This is an advanced shell script, as each shell code is sourced into the shell,
 # rather than evaluated.
 
@@ -31,11 +34,16 @@ echo '';
 
 while read label; do
 
-	let count++; read code;
+	read code;
 
-	if (( DEAD == 1 )); then let fail++; continue; fi;
+	if [[ "$label" == shell ]]; then
+		if (( DEAD == 1 )); then continue; fi;
+		source <(echo "$code"); continue;
+	fi;
 
-	FATAL=0; # reset FATAL flag
+	let count++;
+ 
+	if (( DEAD == 1 )); then let count++; let fail++; continue; fi;
 
 	if source <(echo "$code"); then
 
@@ -46,6 +54,7 @@ while read label; do
 		echo Test case: "$label" $failed; let fail++;
 
 		if (( FATAL )); then 
+			FATAL=0; # reset FATAL flag
 			echo $'\nImperative test failure in' $label;
 			let DEAD=1; # set all operations further, fail
 		fi;
