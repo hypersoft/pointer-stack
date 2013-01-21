@@ -17,22 +17,28 @@
 
 declare -i succeed=0 fail=0 count=0;
 
+{ # everything in this block goes to stderr..
+
+echo '';
+
 while read label; do
 	let count++;
 	read code;
 	source <(echo $code) || {
 		echo test case $label: failed;
-		let failed++;
+		let fail++;
 	} && {
 		echo test case $label: succeeded;
 		let succeed++;
 	}
 done;
 
-echo '';
-echo $success/$count succeeded.
-echo $failed/$count failed.
-echo '';
 
-exit $failed;
+echo '';
+echo $succeed/$count succeeded.
+echo $fail/$count failed.
+echo '';
+} >&2;
+
+exit $fail;
 
