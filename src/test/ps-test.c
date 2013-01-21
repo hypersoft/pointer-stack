@@ -84,7 +84,7 @@ void test_main() {
 
 	PointerStack stack = pointer_stack_create();
 
-	write_test("PointerStack Push...", "FATAL=1; [[ %i != 0 ]]", pointer_stack_push(stack, buffer));
+	write_test("PointerStack Push...", "[[ %i != 0 ]]", pointer_stack_push(stack, buffer));
 	write_test("PointerStack Peek...", "[[ '%p' == '%p' ]]", pointer_stack_peek(stack, 0), buffer);
 	write_test("PointerStack Poke...", "[[ '%p' == '%p' ]]", pointer_stack_poke(stack, 0, NULL), buffer);
 	write_test("PointerStack Pop....", "[[ '%p' == '%p' ]]", pointer_stack_pop(stack), NULL);
