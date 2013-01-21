@@ -149,16 +149,20 @@ bool pointer_stack_pack(PointerStack * stack) {
 
 	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
 
-	size_t units = (stack->index + stack->buffer);
+	size_t units = (stack->units - stack->index);
+	size_t buffer = (stack->buffer + 1);
 	
+	if (units > buffer || units < buffer) units = buffer;
+
 	if ( stack->limit && units > stack->limit ) {
 		units -= stack->limit;
 		if ( ! units ) return false;
 	}
 
+	if (units == stack->units) return false;	
+
 	stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	stack->units = units;
-
 	return true;
 
 }
