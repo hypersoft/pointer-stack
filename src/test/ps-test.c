@@ -18,65 +18,72 @@ void write_test(char * label, char * format, ...) {
 
 }
 
-// this will screw up testing if the script is multiline!
+// Content is already single quoted! Backslash escapes are interpreted by the shell.
+// you will have to double backslash escape them to avoid C translations.
+// the shell will attempt to localize the message.
+void write_message(char * msg) {
+	write_test("shell", "echo -e $'%s';", msg);
+}
+
+void new_group(char * title) {
+	write_test("shell", "echo -e $'\\n%s\\n'; %s", title, "let INDENT+=4;");
+}
+
+void end_group() {
+	write_test("shell", "let INDENT-=4;");
+}
+
+// Multi-line script enabled, but note: each line must be a complete execution unit!
 void write_script(char * script) {
 	write_test("shell", "scripting.code;\n%s\nscripting.ends;", script);
 }
 
-void write_break() {
-	write_script("echo '';");
-}
-
 void fatal_errors(bool active) {
-	if (active) write_script("error.fatal");
-	else write_script("error.normal");
+	if (active) write_test("shell", "error.fatal");
+	else write_test("shell", "error.normal");
 }
 
-void set_case_indent(int spaces) {
-	write_test("shell", "INDENT=%i;", spaces);
-}
+#define write_break() write_message("")
 
 /* END TEST SUITE HELPERS */
 
 void test_optimization() {
 
+	new_group("Optimization tests");
+
 	PointerStack stack = pointer_stack_create();
 
-	write_script("echo 'Optimization tests';");
-
-	write_break(); set_case_indent(4);
 	write_test("PointerStack Get Buffering", "[[ %li == %li ]]", pointer_stack_get_buffering(stack), 7);
-	set_case_indent(0);
 
 	pointer_stack_dispose(stack);
+
+	end_group();
 
 }
 
 void test_io() {
 
-	PointerStack stack = pointer_stack_create();
+	new_group("I/O operation tests");
 
+	PointerStack stack = pointer_stack_create();
 	pointer_stack_push(stack, buffer); // "initialize" the stack so we can test it.
 
-	write_script("echo 'I/O operation tests';");
-
-	write_break(); set_case_indent(4);
 	write_test("PointerStack Get Count", "[[ %li == 1 ]]", pointer_stack_get_count(stack));
 	write_test("PointerStack Get Slots", "[[ %li == %li ]]", pointer_stack_get_slots(stack), 7);
 	write_test("PointerStack Get Units", "[[ %li == %li ]]", pointer_stack_get_units(stack), 8);
-	set_case_indent(0);
 
 	pointer_stack_dispose(stack);
+
+	end_group();
 
 }
 
 void test_main() {
 
+	new_group("General operation tests");
+
 	PointerStack stack = pointer_stack_create();
 
-	write_script("echo 'General operation tests';");
-
-	write_break(); set_case_indent(4);
 	write_test("PointerStack Push...", "FATAL=1; [[ %i != 0 ]]", pointer_stack_push(stack, buffer));
 	write_test("PointerStack Peek...", "[[ '%p' == '%p' ]]", pointer_stack_peek(stack, 0), buffer);
 	write_test("PointerStack Poke...", "[[ '%p' == '%p' ]]", pointer_stack_poke(stack, 0, NULL), buffer);
@@ -90,33 +97,32 @@ void test_main() {
 	write_break();
 	write_test("PointerStack Push (Reject PS_ACTION_NULL)...", "[[ %i != 1 ]]", pointer_stack_push(stack, (void *) -1));
 	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
-	set_case_indent(0);
 
 	pointer_stack_dispose(stack);
+
+	end_group();
 
 }
 
 void test_create_pointer_stack() {
 
+	new_group("Lifecycle operation tests");
+
 	PointerStack stack = pointer_stack_create();
 
 	fatal_errors(true);
-
-	write_script("echo -e 'Lifecycle operation tests\\n';");
-
-	set_case_indent(4);
 	write_test("Create PointerStack....", "[[ %li != 0 ]]", (long int) stack);
 	write_test("Dispose PointerStack...", "[[ %i  != 0 ]]", pointer_stack_dispose(stack));
-	set_case_indent(0);
-
 	fatal_errors(false);
+
+	end_group();
 
 }
 
 int main() {
-	test_create_pointer_stack(); write_break();
-	test_main(); write_break();
-	test_io(); write_break();
+	test_create_pointer_stack();
+	test_main();
+	test_io();
 	test_optimization();
 	return 0;
 }
