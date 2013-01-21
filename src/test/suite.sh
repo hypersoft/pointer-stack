@@ -17,35 +17,47 @@
 
 declare -i succeed=0 fail=0 count=0;
 
+declare -i FATAL=0; # set this to 1 at the head of a test to break all further tests.
+
+declare -i DEAD=0; # Internal use only, we use this to skip further testing, but count all failures.
+
 [[ -t 1 ]] && { # output is terminal... color it!
-	declare failed="$(tput bold)$(tput setf 2)[failed]$(tput sgr0)" succeeded="$(tput bold)$(tput setf 2)[succeeded]$(tput sgr0)"
+	declare failed="$(tput bold)$(tput setf 4)[failed]$(tput sgr0)" succeeded="$(tput bold)$(tput setf 2)[succeeded]$(tput sgr0)"
 } || { # output other...
 	declare failed='[failed]' succeeded='[succeeded]'
 }
 
-{ # everything in this block goes to stderr..
-
 echo '';
 
 while read label; do
-	let count++;
-	read code;
-	source <(echo "$code") || {
-		echo Test case: "$label" $failed;
-		let fail++;
-	} && {
-		echo Test case: "$label" $succeeded;
-		let succeed++;
-	}
-done;
 
+	let count++; read code;
+
+	if (( DEAD == 1 )); then let fail++; continue; fi;
+
+	FATAL=0; # reset FATAL flag
+
+	source <(echo "$code") && {
+
+		echo Test case: "$label" $succeeded; let succeed++;
+
+	} || {
+
+		echo Test case: "$label" $failed; let fail++;
+
+		if (( FATAL )); then 
+			echo $'\nImperative test failure in' $label;
+			let DEAD=1; # set all operations further, fail
+		fi;
+
+	}
+
+done;
 
 echo '';
 echo $succeed/$count succeeded.
 echo $fail/$count failed.
 echo '';
-
-} >&2;
 
 exit $fail;
 
