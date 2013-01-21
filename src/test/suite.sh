@@ -23,6 +23,7 @@ declare -i succeed=0 fail=0 count=0;
 declare -i FATAL=0; # set this to 1 at the head of a test to break all further tests.
 declare -i INDENT=0; # set this to the number of spaces you want test case output indented.
 declare -i DEAD=0; # Internal use only, we use this to skip further testing, but count all failures.
+declare -i SCRIPTING=0; # set this to 1 to enter a read, execute loop, from within a shell code section
 
 [[ -t 1 ]] && { # output is terminal... color it!
 	declare failed="$(tput bold)$(tput setf 4)[failed]$(tput sgr0)" succeeded="$(tput bold)$(tput setf 2)[succeeded]$(tput sgr0)"
@@ -32,15 +33,40 @@ declare -i DEAD=0; # Internal use only, we use this to skip further testing, but
 
 echo '';
 
+# You can call on the following from any code section to switch on/off fatalaties
+error.fatal() {
+	FATAL=1;
+}
+
+error.normal() {
+	FATAL=0;
+}
+
+# You can call on the following from within a shell code section to switch on/off read execute loop
+scripting.code() {
+	SCRIPTING=1;
+}
+
+scripting.ends() {
+	SCRIPTING=0;
+}
+
 while read label; do
 
-	[[ -z "$label" ]] && continue; # permit whitespace
+	[[ -z "$label" ]] && { echo ''; continue; } # passthrough whitespace
 
-	read code;
+	read -r code;
 
 	if [[ "$label" == shell ]]; then
 		if (( DEAD == 1 )); then continue; fi;
+		# shell code section
 		source <(echo "$code"); continue;
+		if (( SCRIPTING )); then
+			while (( SCRIPTING )); do
+				read -r code;
+				source <(echo "$code");
+			done;
+		fi;
 	fi;
 
 	let count++;
@@ -49,7 +75,7 @@ while read label; do
 
 	if source <(echo "$code"); then
 
-		FATAL=0;
+		# FATAL=0; # deprecated, must be manually reset to improve code flow
 		printf '%*s' $INDENT;
 		echo Test case: "$label" $succeeded; let succeed++;
 
@@ -59,12 +85,14 @@ while read label; do
 		echo Test case: "$label" $failed; let fail++;
 
 		if (( FATAL )); then 
-			FATAL=0; # reset FATAL flag
 			echo $'\nImperative test failure in' $label;
 			let DEAD=1; # set all operations further, fail
 		fi;
 
 	fi;
+
+	# make sure scripting is off for good measure, it only works from a shell section
+	SCRIPTING=0;
 
 done;
 
