@@ -13,10 +13,6 @@
 # A label of `shell' causes testing to be bypassed, and code to be run. This is mostly
 # useful for printing messages, modifying environment, etc..
 
-# A label of `echo' causes testing to be bypassed, and the code to be echoed to stdout.
-
-# A label of `printf' causes testing to be bypassed, and code to be passed to printf.
-
 # Generally, all you need to do is write your test application, and pipe the prescribed
 # format of data into the shell script.
 
@@ -45,16 +41,6 @@ while read label; do
 	if [[ "$label" == shell ]]; then
 		if (( DEAD == 1 )); then continue; fi;
 		source <(echo "$code"); continue;
-	fi;
-
-	if [[ "$label" == echo ]]; then
-		if (( DEAD == 1 )); then continue; fi;
-		echo "$code"; continue;
-	fi;
-
-	if [[ "$label" == printf ]]; then
-		if (( DEAD == 1 )); then continue; fi;
-		printf $code; continue;
 	fi;
 
 	let count++;
