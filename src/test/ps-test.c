@@ -116,6 +116,21 @@ void test_io() {
 
 }
 
+void test_limitation() {
+
+	new_group("Limitation tests");
+
+	PointerStack stack = pointer_stack_create();
+
+	write_test("PointerStack Set Limit", "[[ %i == 1 ]]", pointer_stack_set_limit(stack, 2));
+	write_test("PointerStack Get Limit", "[[ %li == %li ]]", pointer_stack_get_limit(stack), 2);
+
+	pointer_stack_dispose(stack);
+
+	end_group();
+
+}
+
 void test_optimization() {
 
 	new_group("Optimization tests");
@@ -166,6 +181,7 @@ int main() {
 	test_main();
 	test_extended();
 	test_io();
+	test_limitation();
 	test_optimization();
 	test_private();
 	return 0;
