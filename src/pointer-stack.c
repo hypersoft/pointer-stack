@@ -151,8 +151,9 @@ bool pointer_stack_pack(PointerStack * stack) {
 	if (units > buffer || units < buffer) units = buffer;
 
 	if ( stack->limit && units > stack->limit ) {
-		units -= stack->limit;
-		if ( ! units ) return false;
+		size_t subunits = (units - stack->limit); // rollback
+		if( subunits <= stack->buffer ) units -= subunits; // unbuffer
+		if (units > stack->limit) return false; //check
 	}
 
 	if (units == stack->units) return false;	
