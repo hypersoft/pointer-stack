@@ -48,8 +48,8 @@ scripting.code() {
 }
 
 scripting.ends() {
+	local -i e=${1:-$?};
 	SCRIPTING=0;
-	local -i e=${1:-0};
 	return e;
 }
 
