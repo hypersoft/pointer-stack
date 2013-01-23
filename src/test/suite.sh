@@ -34,9 +34,9 @@ declare ACTION='Test case:'
 }
 
 error.paint() {
-	shopt -s nullglob;
-	if [[ -t 1 ]]; then tput bold; tput setf 4; fi;
-	echo -E ${*};
+	shopt -s nullglob; local tag='== failed';
+	if [[ -t 1 ]]; then tput bold; tput setf 4; tag=''; fi;
+	echo -E ${*} $tag;
 	if [[ -t 1 ]]; then tput sgr0; fi;
 	shopt -u nullglob;
 }
