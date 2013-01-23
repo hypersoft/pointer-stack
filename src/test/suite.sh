@@ -65,6 +65,7 @@ while read label; do
 		while (( SCRIPTING )); do
 			read -r code; 
 			script+="$code"$'\n';
+			[[ "$code" =~ ^scripting\.ends ]] && SCRIPTING=0;
 		done;
 		[[ -n "${script:0:1}" ]] && source <(echo "$script");
 		continue;
