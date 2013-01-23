@@ -47,6 +47,22 @@ void fatal_errors(bool active) {
 
 /* END TEST SUITE HELPERS */
 
+void test_create_pointer_stack() {
+
+	new_group("Life cycle operation tests");
+
+	PointerStack stack = pointer_stack_create();
+
+	fatal_errors(true);
+	write_test("Create PointerStack....", "[[ %li != 0 ]]", (long int) stack);
+	write_test("Dispose PointerStack...", "[[ %i  != 0 ]]", pointer_stack_dispose(stack));
+	fatal_errors(false);
+
+	end_group();
+
+}
+
+
 void test_main() {
 
 	bool test = false;
@@ -161,16 +177,17 @@ void test_private() {
 
 }
 
-void test_create_pointer_stack() {
+void test_protection() {
 
-	new_group("Life cycle operation tests");
+	new_group("Protection tests");
 
 	PointerStack stack = pointer_stack_create();
 
-	fatal_errors(true);
-	write_test("Create PointerStack....", "[[ %li != 0 ]]", (long int) stack);
-	write_test("Dispose PointerStack...", "[[ %i  != 0 ]]", pointer_stack_dispose(stack));
-	fatal_errors(false);
+	write_test("PointerStack Lock.......", "[[ %i  == 1 ]]", pointer_stack_lock(stack));
+	write_test("PointerStack Get Lock...", "[[ %li == 1 ]]", pointer_stack_get_lock(stack));
+	write_test("PointerStack Unlock.....", "[[ %i  == 1 ]]", pointer_stack_lock(stack));
+
+	pointer_stack_dispose(stack);
 
 	end_group();
 
@@ -184,6 +201,7 @@ int main() {
 	test_limitation();
 	test_optimization();
 	test_private();
+	test_protection();
 	return 0;
 }
 
