@@ -80,7 +80,9 @@ while read label; do
 	else
 
 		printf '%*s' $INDENT;
-		echo ${ACTION} "$label" $failed; let fail++;
+		echo ${ACTION} "$label" $failed;
+		printf '\n%*s' $INDENT;
+		echo "$code" == false\;; let fail++;
 
 		if (( FATAL )); then 
 			echo $'\nImperative test failure in' $label;
