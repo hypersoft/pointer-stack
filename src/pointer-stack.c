@@ -132,7 +132,7 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 		return result;
 
 	if (PointerStackIsInverted) {
-		invert_range_item(0, stack->index - 1, &index);
+		if ( ! invert_range_item(0, stack->index - 1, &index) ) return result;
 		if (index >= stack->index) return result;
 	}
 
