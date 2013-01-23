@@ -32,12 +32,10 @@ size_t pointer_stack_error(PointerStack * stack) {
 }
 
 bool pointer_stack_void(PointerStack * stack, size_t count) {
-	if ( ! HavePointerStack || ! HavePointerStackData ) return false;
-	if (count <= stack->index) {
-		stack->index -= count;
-		return true;
-	}
-	return false;
+	if ( ! HavePointerStack || ! HavePointerStackData || ! count ) return false;
+	if (count > stack->index) return false;
+	stack->index -= count;
+	return true;
 }
 
 bool pointer_stack_reverse(PointerStack * stack) {
