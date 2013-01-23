@@ -57,18 +57,12 @@ void test_main() {
 
 	test = pointer_stack_pack(stack); // need to cache this, dual procedure parameter calls dependent on each other might not work out!
 
-	write_test("PointerStack Pack (buffer)..................", "[[ %i == 1 && %li == %li ]]", test, pointer_stack_get_units(stack), 8);
-	write_test("PointerStack Push...........................", "[[ %i == 1 ]]", pointer_stack_push(stack, buffer));
-	write_test("PointerStack Pointer........................", "[[ '%p' == '%p' ]]", * pointer_stack_pointer(stack, 0), buffer);
-	write_test("PointerStack Peek...........................", "[[ '%p' == '%p' ]]",   pointer_stack_peek(stack, 0), buffer);
-	write_test("PointerStack Poke...........................", "[[ '%p' == '%p' ]]",   pointer_stack_poke(stack, 0, NULL), buffer);
-	write_test("PointerStack Pop............................", "[[ '%p' == '%p' ]]",   pointer_stack_pop(stack), NULL);
-	write_test("PointerStack Pack (false)...................", "[[ %i == 0 ]]", pointer_stack_pack(stack));
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
-	write_test("PointerStack Pop (Return PS_ACTION_NULL)....", "[[ '%p' == '%p' ]]", pointer_stack_pop(stack), PS_ACTION_NULL);
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
-	write_test("PointerStack Push (Reject PS_ACTION_NULL)...", "[[ %i != 1 ]]", pointer_stack_push(stack, (void *) -1));
-	write_test("PointerStack Empty..........................", "[[ %li == 0 ]]", pointer_stack_get_count(stack));
+	write_test("PointerStack Pack......", "[[ %i == 1 && %li == %li ]]", test, pointer_stack_get_units(stack), 8);
+	write_test("PointerStack Push......", "[[ %i == 1 ]]", pointer_stack_push(stack, buffer));
+	write_test("PointerStack Pointer...", "[[ '%p' == '%p' ]]", * pointer_stack_pointer(stack, 0), buffer);
+	write_test("PointerStack Peek......", "[[ '%p' == '%p' ]]",   pointer_stack_peek(stack, 0), buffer);
+	write_test("PointerStack Poke......", "[[ '%p' == '%p' ]]",   pointer_stack_poke(stack, 0, NULL), buffer);
+	write_test("PointerStack Pop.......", "[[ '%p' == '%p' ]]",   pointer_stack_pop(stack), NULL);
 
 	pointer_stack_dispose(stack);
 
@@ -86,11 +80,11 @@ void test_extended() {
 
 	bool status = pointer_stack_reverse(stack);
 
-	write_test("PointerStack Reverse...", "[[ %i == 1 && '%p' == '%p' ]]", status, pointer_stack_pop(stack), buffer);
+	write_test("PointerStack Reverse...", "[[ %i == 1 && '%p' == '%p' ]]", status, pointer_stack_peek(stack, 1), buffer);
 	status = pointer_stack_invert(stack, true);
 	write_test("PointerStack Invert....", "[[ %i == 1 && '%p' == '%p' ]]", status, pointer_stack_peek(stack, 0), buffer);
 	status = pointer_stack_void(stack, 1);
-	write_test("PointerStack Void......", "[[ %i == 1 && %i == 0 ]]", status, pointer_stack_get_count(stack));
+	write_test("PointerStack Void......", "[[ %i == 1 && %i == 1 ]]", status, pointer_stack_get_count(stack));
 
 	pointer_stack_dispose(stack);
 
@@ -109,7 +103,13 @@ void test_io() {
 	write_test("PointerStack Get Count", "[[ %li == 1 ]]", pointer_stack_get_count(stack));
 	write_test("PointerStack Get Slots", "[[ %li == %li ]]", pointer_stack_get_slots(stack), 7);
 	write_test("PointerStack Get Units", "[[ %li == %li ]]", pointer_stack_get_units(stack), 8);
+	PointerStackExport parray = pointer_stack_export(stack, 0, 0);
+	write_test("PointerStack Export...", "[[ '%p' != '(nil)' && '%p' == '%p' && '%p' == '(nil)' ]]", parray, parray[0], buffer, parray[1]); 
+	write_test("PointerStack Free.....", "[[ %i == 1 ]]", pointer_stack_free(parray));
 
+	void * array[] = { buffer, buffer, NULL };
+	bool test = pointer_stack_import(stack, array, 0, 1);
+	write_test("PointerStack Import...", "[[ %i == 1 && '%p' == '%p' && '%p' == '%p' && '%p' == '%p' ]]", test, pointer_stack_peek(stack, 1), buffer, pointer_stack_peek(stack, 2), buffer, pointer_stack_peek(stack, 3), PS_ACTION_NULL);
 	pointer_stack_dispose(stack);
 
 	end_group();

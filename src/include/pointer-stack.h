@@ -34,7 +34,7 @@
 	#define PointerStackActionNull(PTR) PS_ACTION_NULL == PTR
  
 	/* Internally Allocated Export Data */
-	typedef void * PointerStackExport;
+	typedef void ** PointerStackExport;
 
 	/* Global Allocation Routines */
 	typedef void * ( * PointerStackAllocator   ) ( size_t );
@@ -66,7 +66,7 @@
 	extern size_t pointer_stack_get_slots(PointerStack);
 	extern size_t pointer_stack_get_units(PointerStack);
 	extern bool   pointer_stack_free(PointerStackExport);
-	extern PointerStackExport * pointer_stack_export(PointerStack, size_t, size_t);
+	extern PointerStackExport pointer_stack_export(PointerStack, size_t, size_t);
 	extern bool pointer_stack_import(PointerStack, void **, size_t, size_t);
 
 	/* lifecycle */

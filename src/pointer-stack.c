@@ -121,10 +121,10 @@ void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
 	void * pointer = PS_ACTION_NULL;
 
-	if (PointerStackIsInverted) invert_range_item(0, stack->index, &index);
+	if (PointerStackIsInverted) invert_range_item(0, stack->index - 1, &index);
 
 	if (HavePointerStack && HavePointerStackData) {
-		if (index < stack->units)
+		if (index < stack->index)
 			pointer = stack->item[index];
 	}
 
@@ -136,8 +136,13 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 
 	void * result = PS_ACTION_NULL;
 
-	if ( ! HavePointerStack || ! HavePointerStackData || index >= stack->index || pointer == result)
+	if ( ! HavePointerStack || ! HavePointerStackData || pointer == result || index >= stack->index)
 		return result;
+
+	if (PointerStackIsInverted) {
+		invert_range_item(0, stack->index - 1, &index);
+		if (index >= stack->index) return result;
+	}
 
 	result = stack->item[index]; stack->item[index] = pointer;
 
