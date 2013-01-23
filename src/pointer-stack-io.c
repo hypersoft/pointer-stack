@@ -11,8 +11,9 @@
 
 	extern PointerStackExport pointer_stack_export(PointerStack, size_t, size_t);
 	extern bool pointer_stack_import(PointerStack, void **, size_t, size_t);
-	Note: Items marked with an asterisk have not yet been implemented.
- 
+
+	typedef void ** PointerStackExport;
+
 */
 
 typedef void ** PointerStackExport;
@@ -29,7 +30,7 @@ size_t pointer_stack_get_slots(PointerStack * stack) {
 	return 0;
 }
 
-/* Get the count of free slots in a PointerStack */
+/* Get the count of allocated units in a PointerStack */
 size_t pointer_stack_get_units(PointerStack * stack) {
 	if (HavePointerStack && HavePointerStackData) return (stack->units);
 	return 0;

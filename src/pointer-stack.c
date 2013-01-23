@@ -84,21 +84,12 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 	size_t units = (1 + stack->units);
 
-	if ( ! HavePointerStackData ) {
-		units += stack->buffer;
-		if ( stack->limit && units > stack->limit ) {
-			units -= stack->limit;
-			if ( ! units ) return false;
-		}
-		stack->item = pointer_stack_allocator_lease(units * sizeof(void *));
-		stack->units = units;
-	}
-
-	if ( ! HavePointerStackSlot ) { 
+	if ( ! HavePointerStackSlot || ! HavePointerStackData ) { 
 		units += (stack->buffer);
 		if ( stack->limit && units > stack->limit ) {
-			units -= stack->limit;
-			if ( ! units ) return false;
+			size_t subunits = (units - stack->limit); // rollback
+			if( subunits <= stack->buffer ) units -= subunits; // unbuffer
+			if (units > stack->limit) return false; //check
 		}
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 		stack->units = units;
