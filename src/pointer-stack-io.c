@@ -69,10 +69,10 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 		if (PointerStackIsLocked) return false;
 		size_t units = (new_units + stack->buffer + stack->index);
 		if ( stack->limit && units > stack->limit ) {
-			size_t subunits = (stack->limit - units); // rollback
+			size_t subunits = (units - stack->limit); // rollback
 			if( subunits <= stack->buffer ) units -= subunits; // unbuffer
+			if (units > stack->limit) return false; //check
 		}
-		if (stack->limit && units > stack->limit) return false; //check
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	}
 
