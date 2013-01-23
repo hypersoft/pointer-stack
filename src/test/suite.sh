@@ -33,6 +33,14 @@ declare ACTION='Test case:'
 	declare failed='[failed]' succeeded='[succeeded]'
 }
 
+error.paint() {
+	shopt -s nullglob;
+	if [[ -t 1 ]]; then tput bold; tput setf 4; fi;
+	echo -E ${*};
+	if [[ -t 1 ]]; then tput sgr0; fi;
+	shopt -u nullglob;
+}
+
 # You can call on the following from any code section to switch on/off fatalaties
 error.fatal() {
 	FATAL=1;
@@ -88,7 +96,7 @@ while read label; do
 		printf '%*s' $INDENT;
 		echo ${ACTION} "$label" $failed;
 		printf '\n%*s' $INDENT;
-		echo "$code" == false\;; let fail++;
+		error.paint "$code"; let fail++;
 
 		if (( FATAL )); then 
 			echo $'\nImperative test failure in' $label;
