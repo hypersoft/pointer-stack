@@ -15,9 +15,6 @@
  
 */
 
-// we import this here to avoid having to deal with buffering code that's already been written..
-extern bool   pointer_stack_push(PointerStack *, void *);
-
 typedef void ** PointerStackExport;
 
 /* Get the count of elements in a PointerStack */
@@ -57,12 +54,23 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 }
 
 bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
-	// this could be optimized with a proper temporary buffer setting and some calcs..
-	bool result;
-	size_t count = 0;
-	while (item[count++]);
+
+	if ( ! HavePointerStack ) return false;
+
+	register size_t count = 0; while (item[count++]);
 	if (begin >= count || end >= count) return false;
-	size_t units = (end - begin) + 1;
-	while (units-- && (result = pointer_stack_push(stack, item[begin++])));
-	return result;
+
+	register size_t new_units = (end - begin) + 1;
+
+	// do we have enough units allocated?
+	if ((stack->units - stack->index) < (new_units + stack->buffer)) /* no */ {
+		if (PointerStackIsLocked) return false;
+		size_t units = (new_units + stack->buffer + stack->index);
+		if (stack->limit && units >= stack->limit) return false;
+		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+	}
+
+	while (new_units--) stack->item[stack->index++] = item[begin++];
+
+	return true;
 }
