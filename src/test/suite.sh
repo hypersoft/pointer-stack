@@ -61,9 +61,12 @@ while read label; do
 		if (( DEAD == 1 )); then continue; fi;
 		# shell code section
 		source <(echo "$code");
+		script='';
 		while (( SCRIPTING )); do
-			read -r code; . <(echo "$code");
+			read -r code; 
+			script+="$code"$'\n';
 		done;
+		[[ -n "${script:0:1}" ]] && source <(echo "$script");
 		continue;
 	fi;
 
