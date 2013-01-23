@@ -131,6 +131,21 @@ void test_optimization() {
 
 }
 
+void test_private() {
+
+	new_group("Private data tests");
+
+	PointerStack stack = pointer_stack_create();
+
+	write_test("PointerStack Set Private", "[[ %i == 1 ]]", pointer_stack_set_private(stack, buffer));
+	write_test("PointerStack Get Private", "[[ '%p' == '%p' ]]", pointer_stack_get_private(stack), buffer);
+
+	pointer_stack_dispose(stack);
+
+	end_group();
+
+}
+
 void test_create_pointer_stack() {
 
 	new_group("Life cycle operation tests");
@@ -152,6 +167,7 @@ int main() {
 	test_extended();
 	test_io();
 	test_optimization();
+	test_private();
 	return 0;
 }
 
