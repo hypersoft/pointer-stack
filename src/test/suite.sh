@@ -49,6 +49,8 @@ scripting.code() {
 
 scripting.ends() {
 	SCRIPTING=0;
+	local -i e=${1:-0};
+	return e;
 }
 
 while read label; do
