@@ -112,7 +112,8 @@ void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
 	void * pointer = PS_ACTION_NULL;
 
-	if (PointerStackIsInverted) invert_range_item(0, stack->index - 1, &index);
+	if (PointerStackIsInverted) 
+		if ( ! invert_range_item(0, stack->index - 1, &index) ) return pointer;
 
 	if (HavePointerStack && HavePointerStackData) {
 		if (index < stack->index)
