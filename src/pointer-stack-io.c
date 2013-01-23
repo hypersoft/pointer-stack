@@ -55,7 +55,9 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 
 bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
 
-	if ( ! HavePointerStack ) return false;
+	// This procedure should allow importing general pointer operation sentinel error (-1).
+
+	if ( ! HavePointerStack || ! item ) return false;
 
 	register size_t count = 0; while (item[count++]);
 	if (begin >= count || end >= count) return false;
@@ -66,7 +68,11 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 	if ((stack->units - stack->index) < (new_units)) /* no */ {
 		if (PointerStackIsLocked) return false;
 		size_t units = (new_units + stack->buffer + stack->index);
-		if (stack->limit && units > stack->limit) return false;
+		if ( stack->limit && units > stack->limit ) {
+			size_t subunits = (stack->limit - units); // rollback
+			if( subunits <= stack->buffer ) units -= subunits; // unbuffer
+		}
+		if (stack->limit && units > stack->limit) return false; //check
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	}
 
@@ -74,3 +80,4 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 
 	return true;
 }
+
