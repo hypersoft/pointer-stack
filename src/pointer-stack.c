@@ -23,7 +23,7 @@
 #define HavePointerStack stack
 #define HavePointerStackData stack->item
 #define HavePointerStackItem stack->index
-#define HavePointerStackSlot stack->units > stack->index
+#define HavePointerStackSlot (stack->units > stack->index)
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
 #define PointerStackIsBuffered stack->buffer
