@@ -63,7 +63,7 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 	register size_t new_units = (end - begin) + 1;
 
 	// do we have enough units allocated?
-	if ((stack->units - stack->index) < (new_units + stack->buffer)) /* no */ {
+	if ((stack->units - stack->index) < (new_units)) /* no */ {
 		if (PointerStackIsLocked) return false;
 		size_t units = (new_units + stack->buffer + stack->index);
 		if (stack->limit && units > stack->limit) return false;
