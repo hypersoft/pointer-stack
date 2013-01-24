@@ -62,21 +62,23 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 
 	if ( from >= stack->index || to >= stack->index ) PointerStackAbort(PSE_INVALID_RANGE);
-	size_t units = (to - from) + 1;
+	register size_t units = (to - from) + 1;
 	void ** export = pointer_stack_allocator_lease((1 + units) * sizeof(void *));
-	size_t index = 0;
+	register size_t index = 0, source = from;
 
-	if ( ! PointerStackIsInverted ) while (from <= to) export[index++] = stack->item[from++];
-	else while (from <= to) export[index++] = stack->item[to--];
+	if ( ! PointerStackIsInverted ) while (units--) export[index++] = stack->item[source++];
+	else {
+		source = to;
+		while (units--) export[index++] = stack->item[source--];
+	}
 
-	export[units] = NULL;
+	export[index] = NULL;
 	PointerStackReturn(export);
 
 }
 
 bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
 
-	// This procedure should allow importing general pointer operation sentinel error (-1).
 
 	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 	if ( ! item ) PointerStackFail(PSE_INVALID_INPUT);
@@ -98,8 +100,15 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	}
 
-	if ( ! PointerStackIsInverted ) while (new_units--) stack->item[stack->index++] = item[begin++];
-	else while (new_units--) stack->item[stack->index++] = item[end--];
+	register size_t index = 0;
+
+	if ( ! PointerStackIsInverted ) {
+		count = begin;
+		while (new_units--) stack->item[stack->index++] = item[count++];
+	} else {
+		count = end;
+		while (new_units--) stack->item[stack->index++] = item[count--];
+	}
 
 	PointerStackSuccess(true);
 
