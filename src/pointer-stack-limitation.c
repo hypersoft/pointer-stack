@@ -11,33 +11,30 @@
 
 /* get the data limit associated with a PointerStack */
 size_t pointer_stack_get_limit(PointerStack * stack) {
-	if (ThisPointerStack) return stack->limit;
-	return 0;
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
+	PointerStackBless(stack->limit);
 }
 
 /* set the data limit associated with a PointerStack */
 bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
 
-	if (ThisPointerStack) {
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 
-		if ( limit && ThisPointerStackData && (stack->units > limit) ) {
+	if ( limit && ThisPointerStackData && (stack->units > limit) ) {
 
-			// truncate instruction.
-			stack->index = stack->units = limit;
+		// truncate instruction.
+		stack->index = stack->units = limit;
 
-			// shrink wrap it...
-			stack->item = pointer_stack_allocator_resize(stack->item, stack->units * sizeof(void *));
-
-		}
-
-		// set the limit
-		stack->limit = limit;
-
-		return true;
+		// shrink wrap it...
+		stack->item = pointer_stack_allocator_resize(stack->item, stack->units * sizeof(void *));
 
 	}
 
-	return false;
+	// set the limit
+	stack->limit = limit;
+
+	PointerStackSuccess(true);
+
 
 }
 
