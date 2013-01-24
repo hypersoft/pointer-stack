@@ -29,7 +29,9 @@
 #define PointerStackIsBuffered stack->buffer
 #define PointerStackIsInverted stack->inverted
 #define PointerStackSuccess(value) return (stack->error = PSE_NO_ERROR) + (size_t) true
+#define PointerStackFalse(CODE) { return false; }
 #define PointerStackFail(CODE) { stack->error = CODE; return false; }
+#define PointerStackNull(CODE) return PS_ACTION_NULL
 #define PointerStackAbort(CODE) { stack->error = CODE; return PS_ACTION_NULL; }
 #define PointerStackReturn(POINTER) stack->error = PSE_NO_ERROR; return (POINTER)
 
@@ -86,7 +88,7 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
-	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
  	if (PointerStackIsLocked) PointerStackFail(PSE_STACK_LOCKED);
 
 	if ( pointer == PS_ACTION_NULL ) PointerStackFail(PSE_INVALID_INPUT);
@@ -113,7 +115,7 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 /* Pop item off of stack top */
 void * pointer_stack_pop(PointerStack * stack) {
 
-	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackNull(PSE_NO_STACK);
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
@@ -121,9 +123,10 @@ void * pointer_stack_pop(PointerStack * stack) {
 
 }
 
+/* Have a look, see... */
 void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
-	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackNull(PSE_NO_STACK);
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
@@ -137,9 +140,10 @@ void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
 }
 
+/* Swap meet, dealers choice */
 void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 
-	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackNull(PSE_NO_STACK);
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
@@ -156,9 +160,10 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 
 }
 
+/* Sign, deliver, stack package */
 bool pointer_stack_pack(PointerStack * stack) {
 
-	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 	if ( PointerStackIsLocked ) PointerStackFail(PSE_STACK_LOCKED);
 
 	size_t units = (stack->units - stack->index);
@@ -181,9 +186,10 @@ bool pointer_stack_pack(PointerStack * stack) {
 
 }
 
+/* get unit location */
 void ** pointer_stack_pointer(PointerStack * stack, size_t index) {
 
-	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackNull(PSE_NO_STACK);
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
