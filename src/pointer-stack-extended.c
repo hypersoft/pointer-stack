@@ -16,7 +16,7 @@
 
 /* control index inversion on a PointerStack */
 bool pointer_stack_invert(PointerStack * stack, bool status) {
-	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 	PointerStackIsInverted = status;
 	PointerStackSuccess(true);
 }
