@@ -34,6 +34,7 @@
 		PSE_STACK_LIMITED,
 		PSE_OVERFLOW,
 		PSE_INVALID_INPUT,
+		PSE_INVALID_RANGE,
 	} PointerStackError;
  
 	extern bool    pointer_stack_push(PointerStack, void *);

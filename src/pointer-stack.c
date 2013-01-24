@@ -62,6 +62,7 @@ typedef enum PointerStackError {
 	PSE_STACK_LIMITED,
 	PSE_OVERFLOW,
 	PSE_INVALID_INPUT,
+	PSE_INVALID_RANGE,
 } PointerStackError;
 
 #include "pointer-stack-allocation.c"
