@@ -87,11 +87,11 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
- 	if (PointerStackIsLocked) PointerStackFail(PSE_STACK_LOCKED);
 
 	register size_t units = (1 + stack->units);
 
 	if ( ! ThisPointerStackHasSlot || ! ThisPointerStackData ) { 
+	 	if (PointerStackIsLocked) PointerStackFail(PSE_STACK_LOCKED);
 		units += (stack->buffer);
 		if ( PointerStackIsLimited && units > PointerStackIsLimited ) {
 			size_t subunits = (units - PointerStackIsLimited); // rollback
