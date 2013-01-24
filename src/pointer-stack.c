@@ -128,9 +128,7 @@ void * pointer_stack_peek(PointerStack * stack, size_t index) {
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
-	if (PointerStackIsInverted) 
-		if ( ! invert_range_item(0, stack->index - 1, &index) )
-			PointerStackAbort(PSE_OVERFLOW);
+	if (PointerStackIsInverted) invert_range_item(0, stack->index - 1, &index);
 
 	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
@@ -145,9 +143,7 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
-	if (PointerStackIsInverted)
-		if ( ! invert_range_item(0, stack->index - 1, &index) ) 
-			PointerStackAbort(PSE_OVERFLOW);
+	if (PointerStackIsInverted) invert_range_item(0, stack->index - 1, &index);
 
 	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
