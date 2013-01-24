@@ -23,7 +23,7 @@ bool pointer_stack_invert(PointerStack * stack, bool status) {
 
 /* Retrieve and clear the error value associated with a PointerStack */
 size_t pointer_stack_error(PointerStack * stack) {
-	size_t error = PSE_NO_STACK;
+	register size_t error = PSE_NO_STACK;
 	if (ThisPointerStack) {
 		error = stack->error;
 		stack->error = PSE_NO_ERROR;
