@@ -29,6 +29,7 @@
 #define PointerStackIsBuffered stack->buffer
 #define PointerStackIsInverted stack->inverted
 #define PointerStackSuccess(value) return (stack->error = PSE_NO_ERROR) + (size_t) true
+#define PointerStackBless(value) return (stack->error = PSE_NO_ERROR) + (size_t) value
 #define PointerStackFalse(CODE) { return false; }
 #define PointerStackFail(CODE) { stack->error = CODE; return false; }
 #define PointerStackNull(CODE) return NULL
