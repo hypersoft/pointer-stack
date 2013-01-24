@@ -62,6 +62,7 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
 
 	if ( from >= stack->index || to >= stack->index ) PointerStackAbort(PSE_INVALID_RANGE);
+
 	register size_t units = (to - from) + 1;
 	void ** export = pointer_stack_allocator_lease((1 + units) * sizeof(void *));
 	register size_t index = 0, source = from;
@@ -78,7 +79,6 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 }
 
 bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, size_t end) {
-
 
 	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 	if ( ! item ) PointerStackFail(PSE_INVALID_INPUT);
