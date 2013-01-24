@@ -51,9 +51,10 @@ size_t pointer_stack_get_units(PointerStack * stack) {
 
 /* Deallocate export storage */
 bool pointer_stack_free(PointerStackExport block) {
-	if (block) { 
-		pointer_stack_allocator_release(block); return true;
-	} return false;
+
+	if ( ! block ) return false;  
+	pointer_stack_allocator_release(block); return true;
+
 }
 
 PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_t to) {
