@@ -20,19 +20,19 @@ typedef void ** PointerStackExport;
 
 /* Get the count of elements in a PointerStack */
 size_t pointer_stack_get_count(PointerStack * stack) {
-	if (HavePointerStack && HavePointerStackData) return stack->index;
+	if (ThisPointerStack && ThisPointerStackData) return stack->index;
 	return 0;
 }
 
 /* Get the count of free slots in a PointerStack */
 size_t pointer_stack_get_slots(PointerStack * stack) {
-	if (HavePointerStack && HavePointerStackData) return (stack->units - stack->index);
+	if (ThisPointerStack && ThisPointerStackData) return (stack->units - stack->index);
 	return 0;
 }
 
 /* Get the count of allocated units in a PointerStack */
 size_t pointer_stack_get_units(PointerStack * stack) {
-	if (HavePointerStack && HavePointerStackData) return (stack->units);
+	if (ThisPointerStack && ThisPointerStackData) return (stack->units);
 	return 0;
 }
 
@@ -44,7 +44,7 @@ bool pointer_stack_free(PointerStackExport block) {
 }
 
 PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_t to) {
-	if ( ! HavePointerStack || ! HavePointerStackData ) return NULL;
+	if ( ! ThisPointerStack || ! ThisPointerStackData ) return NULL;
 	if ( from >= stack->index || to >= stack->index ) return NULL;
 	size_t units = (to - from) + 1;
 	void ** export = pointer_stack_allocator_lease((1 + units) * sizeof(void *));
@@ -58,7 +58,7 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 
 	// This procedure should allow importing general pointer operation sentinel error (-1).
 
-	if ( ! HavePointerStack || ! item ) return false;
+	if ( ! ThisPointerStack || ! item ) return false;
 
 	register size_t count = 0; while (item[count++]);
 	if (begin >= count || end >= count) return false;

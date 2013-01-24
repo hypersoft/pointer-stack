@@ -11,13 +11,13 @@
 
 /* get the private data associated with a PointerStack */
 void * pointer_stack_get_private(PointerStack * stack) {
-	if (HavePointerStack) return stack->private;
+	if (ThisPointerStack) return stack->private;
 	return NULL;
 }
 
 /* set the private data associated with a PointerStack */
 bool pointer_stack_set_private(PointerStack * stack, void * private) {
-	if (HavePointerStack) { stack->private = private; return true; }
+	if (ThisPointerStack) { stack->private = private; return true; }
 	return false;
 }
 

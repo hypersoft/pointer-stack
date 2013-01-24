@@ -16,7 +16,7 @@
 
 /* control index inversion on a PointerStack */
 bool pointer_stack_invert(PointerStack * stack, bool status) {
-	if ( ! HavePointerStack ) return false;
+	if ( ! ThisPointerStack ) return false;
 	stack->inverted = status;
 	return true;
 }
@@ -24,7 +24,7 @@ bool pointer_stack_invert(PointerStack * stack, bool status) {
 /* Retrieve and clear the error value associated with a PointerStack */
 size_t pointer_stack_error(PointerStack * stack) {
 	size_t error = PSE_NO_STACK;
-	if (HavePointerStack) {
+	if (ThisPointerStack) {
 		error = stack->error;
 		stack->error = PSE_NO_ERROR;
 	}
@@ -32,7 +32,7 @@ size_t pointer_stack_error(PointerStack * stack) {
 }
 
 bool pointer_stack_void(PointerStack * stack, size_t count) {
-	if ( ! HavePointerStack || ! HavePointerStackData || ! count ) return false;
+	if ( ! ThisPointerStack || ! ThisPointerStackData || ! count ) return false;
 	if (count > stack->index) return false;
 	stack->index -= count;
 	return true;
@@ -40,7 +40,7 @@ bool pointer_stack_void(PointerStack * stack, size_t count) {
 
 bool pointer_stack_reverse(PointerStack * stack) {
 
-	if ( ! HavePointerStack || ! HavePointerStackData ) return false;
+	if ( ! ThisPointerStack || ! ThisPointerStackData ) return false;
 	if ( stack->index == 1 ) return true;
 
 	void * duplicate[stack->index];

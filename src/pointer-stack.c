@@ -20,14 +20,18 @@
 /* Internal Macros */
 
 // test case macros, assuming stack is type of PointerStack
-#define HavePointerStack stack
-#define HavePointerStackData stack->item
-#define HavePointerStackItem stack->index
-#define HavePointerStackSlot (stack->units > stack->index)
+#define ThisPointerStack stack
+#define ThisPointerStackData stack->item
+#define ThisPointerStackItem stack->index
+#define ThisPointerStackHasSlot (stack->units > stack->index)
 #define PointerStackIsLocked stack->lock
 #define PointerStackIsLimited stack->limit
 #define PointerStackIsBuffered stack->buffer
 #define PointerStackIsInverted stack->inverted
+#define PointerStackSuccess(value) return (stack->error = PSE_NO_ERROR) + (size_t) true
+#define PointerStackFail(CODE) { stack->error = CODE; return false; }
+#define PointerStackAbort(CODE) { stack->error = CODE; return PS_ACTION_NULL; }
+#define PointerStackReturn(POINTER) stack->error = PSE_NO_ERROR; return (POINTER)
 
 /* Externally, this is only a (void *) */
 typedef struct PointerStack {
@@ -50,9 +54,11 @@ typedef enum PointerStackError {
 	PSE_NO_ERROR = 0,
 	PSE_NO_STACK,
 	PSE_NO_STACK_DATA,
+	PSE_STACK_EMPTY,
 	PSE_STACK_LOCKED,
 	PSE_STACK_LIMITED,
 	PSE_OVERFLOW,
+	PSE_INVALID_INPUT,
 } PointerStackError;
 
 static void * PS_ACTION_NULL = (void *)(-1LL);
@@ -80,99 +86,108 @@ static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 /* Push item onto stack */
 bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
-	if ( ! HavePointerStack || pointer == PS_ACTION_NULL || PointerStackIsLocked) return false;
+	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+ 	if (PointerStackIsLocked) PointerStackFail(PSE_STACK_LOCKED);
+
+	if ( pointer == PS_ACTION_NULL ) PointerStackFail(PSE_INVALID_INPUT);
 
 	size_t units = (1 + stack->units);
 
-	if ( ! HavePointerStackSlot || ! HavePointerStackData ) { 
+	if ( ! ThisPointerStackHasSlot || ! ThisPointerStackData ) { 
 		units += (stack->buffer);
-		if ( stack->limit && units > stack->limit ) {
-			size_t subunits = (units - stack->limit); // rollback
+		if ( PointerStackIsLimited && units > PointerStackIsLimited ) {
+			size_t subunits = (units - PointerStackIsLimited); // rollback
 			if( subunits <= stack->buffer ) units -= subunits; // unbuffer
-			if (units > stack->limit) return false; //check
+			if (units > PointerStackIsLimited) PointerStackFail(PSE_OVERFLOW); //check
 		}
-		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+		ThisPointerStackData = pointer_stack_allocator_resize(ThisPointerStackData, units * sizeof(void *));
 		stack->units = units;
 	}
 
-	stack->item[stack->index++] = pointer;
-	return true;
+	ThisPointerStackData[stack->index++] = pointer;
+
+	PointerStackSuccess(true);
 
 }
 
 /* Pop item off of stack top */
 void * pointer_stack_pop(PointerStack * stack) {
-	void * pointer = PS_ACTION_NULL;
-	if (HavePointerStack && HavePointerStackData && HavePointerStackItem)
-		pointer = stack->item[--stack->index];
-	return pointer;
+
+	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
+
+	PointerStackReturn(ThisPointerStackData[--stack->index]);
+
 }
 
 void * pointer_stack_peek(PointerStack * stack, size_t index) {
 
-	void * pointer = PS_ACTION_NULL;
+	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
 	if (PointerStackIsInverted) 
-		if ( ! invert_range_item(0, stack->index - 1, &index) ) return pointer;
+		if ( ! invert_range_item(0, stack->index - 1, &index) )
+			PointerStackAbort(PSE_OVERFLOW);
 
-	if (HavePointerStack && HavePointerStackData) {
-		if (index < stack->index)
-			pointer = stack->item[index];
-	}
+	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
-	return pointer;
+	PointerStackReturn(ThisPointerStackData[index]);
 
 }
 
 void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 
-	void * result = PS_ACTION_NULL;
+	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
 
-	if ( ! HavePointerStack || ! HavePointerStackData || pointer == result || index >= stack->index)
-		return result;
+	if (PointerStackIsInverted)
+		if ( ! invert_range_item(0, stack->index - 1, &index) ) 
+			PointerStackAbort(PSE_OVERFLOW);
 
-	if (PointerStackIsInverted) {
-		if ( ! invert_range_item(0, stack->index - 1, &index) ) return result;
-		if (index >= stack->index) return result;
-	}
+	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
-	result = stack->item[index]; stack->item[index] = pointer;
+	void * result = ThisPointerStackData[index];
+	ThisPointerStackData[index] = pointer;
 
-	return result;
+	PointerStackReturn(result);
 
 }
 
 bool pointer_stack_pack(PointerStack * stack) {
 
-	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
+	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+	if ( PointerStackIsLocked ) PointerStackFail(PSE_STACK_LOCKED);
 
 	size_t units = (stack->units - stack->index);
 	size_t buffer = (stack->buffer + 1);
 	
 	if (units > buffer || units < buffer) units = buffer;
 
-	if ( stack->limit && units > stack->limit ) {
-		size_t subunits = (units - stack->limit); // rollback
+	if ( PointerStackIsLimited && units > PointerStackIsLimited ) {
+		size_t subunits = (units - PointerStackIsLimited); // rollback
 		if( subunits <= stack->buffer ) units -= subunits; // unbuffer
-		if (units > stack->limit) return false; //check
+		if (units > PointerStackIsLimited) PointerStackFail(PSE_OVERFLOW); //check
 	}
 
-	if (units == stack->units) return false;	
+	if (units == stack->units) PointerStackFail(PSE_INVALID_INPUT);	
 
-	stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
+	ThisPointerStackData = pointer_stack_allocator_resize(ThisPointerStackData, units * sizeof(void *));
 	stack->units = units;
-	return true;
+
+	PointerStackSuccess(true);
 
 }
 
 void ** pointer_stack_pointer(PointerStack * stack, size_t index) {
 
-	void * pointer = PS_ACTION_NULL;
+	if ( ! ThisPointerStack ) PointerStackAbort(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackAbort(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackAbort(PSE_STACK_EMPTY);
+	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
-	if ( ! HavePointerStack || ! HavePointerStackData ) return pointer;
-
-	if (index < stack->index) pointer = (stack->item + index);
-
-	return pointer;
+	PointerStackReturn(ThisPointerStackData + index);
 
 }

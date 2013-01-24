@@ -11,16 +11,16 @@
 
 /* get the data limit associated with a PointerStack */
 size_t pointer_stack_get_limit(PointerStack * stack) {
-	if (HavePointerStack) return stack->limit;
+	if (ThisPointerStack) return stack->limit;
 	return 0;
 }
 
 /* set the data limit associated with a PointerStack */
 bool pointer_stack_set_limit(PointerStack * stack, size_t limit) {
 
-	if (HavePointerStack) {
+	if (ThisPointerStack) {
 
-		if ( limit && HavePointerStackData && (stack->units > limit) ) {
+		if ( limit && ThisPointerStackData && (stack->units > limit) ) {
 
 			// truncate instruction.
 			stack->index = stack->units = limit;

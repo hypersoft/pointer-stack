@@ -26,9 +26,9 @@ PointerStack * pointer_stack_create(void) {
 /* Destroy a PointerStack */
 bool pointer_stack_dispose(PointerStack * stack) {
 
-	if ( ! HavePointerStack || PointerStackIsLocked ) return false;
+	if ( ! ThisPointerStack || PointerStackIsLocked ) return false;
 
-	if (HavePointerStackData) pointer_stack_allocator_release(stack->item);
+	if (ThisPointerStackData) pointer_stack_allocator_release(stack->item);
 
 	pointer_stack_allocator_release(stack);
 
