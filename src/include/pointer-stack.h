@@ -15,27 +15,6 @@
 	#include <string.h> /* size_t */
 	#include <stdbool.h> /* bool */
 
-	/* Operation Context */
-	typedef void * PointerStack;
-
-	typedef enum PointerStackError {
-		PSE_NO_ERROR = 0,
-		PSE_NO_STACK,
-		PSE_NO_STACK_DATA,
-		PSE_STACK_LOCKED,
-		PSE_STACK_LIMITED,
-		PSE_OVERFLOW,
-	} PointerStackError;
-
-	// Procedures returning a pointer, will return this value to indicate null as null
-	// may be a valid pointer value but -1 will never be a valid pointer address.
-	void * PS_ACTION_NULL = (void *)(-1LL);
-
-	#define PointerStackActionNull(PTR) PS_ACTION_NULL == PTR
- 
-	/* Internally Allocated Export Data */
-	typedef void ** PointerStackExport;
-
 	/* Global Allocation Routines */
 	typedef void * ( * PointerStackAllocator   ) ( size_t );
 	typedef void * ( * PointerStackReallocator ) ( void *, size_t );
@@ -44,6 +23,19 @@
 	/* API Procedures */
 
 	/* main */
+	typedef void * PointerStack;
+
+	typedef enum PointerStackError {
+		PSE_NO_ERROR = 0,
+		PSE_NO_STACK,
+		PSE_NO_STACK_DATA,
+		PSE_STACK_EMPTY,
+		PSE_STACK_LOCKED,
+		PSE_STACK_LIMITED,
+		PSE_OVERFLOW,
+		PSE_INVALID_INPUT,
+	} PointerStackError;
+ 
 	extern bool    pointer_stack_push(PointerStack, void *);
 	extern void *  pointer_stack_pop(PointerStack);
 	extern void *  pointer_stack_peek(PointerStack, size_t);
@@ -62,6 +54,7 @@
 	extern char * pointer_stack_license(void);
 	
 	/* I/O */
+	typedef void ** PointerStackExport;
 	extern size_t pointer_stack_get_count(PointerStack);
 	extern size_t pointer_stack_get_slots(PointerStack);
 	extern size_t pointer_stack_get_units(PointerStack);

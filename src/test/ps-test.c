@@ -125,7 +125,9 @@ void test_io() {
 
 	void * array[] = { buffer, buffer, NULL };
 	bool test = pointer_stack_import(stack, array, 0, 1);
-	write_test("PointerStack Import...", "[[ %i == 1 && '%p' == '%p' && '%p' == '%p' && '%p' == '%p' ]]", test, pointer_stack_peek(stack, 1), buffer, pointer_stack_peek(stack, 2), buffer, pointer_stack_peek(stack, 3), PS_ACTION_NULL);
+	void * result[] = { pointer_stack_peek(stack, 1), pointer_stack_peek(stack, 2), NULL };
+	result[2] = pointer_stack_peek(stack, 3);
+	write_test("PointerStack Import...", "[[ %i == 1 && '%p' == '%p' && '%p' == '%p' && '%p' == '(nil)' && %li == %li ]]", test, result[0], buffer, result[1], buffer, result[2], pointer_stack_error(stack), PSE_OVERFLOW);
 	pointer_stack_dispose(stack);
 
 	end_group();

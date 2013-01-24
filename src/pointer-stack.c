@@ -31,8 +31,8 @@
 #define PointerStackSuccess(value) return (stack->error = PSE_NO_ERROR) + (size_t) true
 #define PointerStackFalse(CODE) { return false; }
 #define PointerStackFail(CODE) { stack->error = CODE; return false; }
-#define PointerStackNull(CODE) return PS_ACTION_NULL
-#define PointerStackAbort(CODE) { stack->error = CODE; return PS_ACTION_NULL; }
+#define PointerStackNull(CODE) return NULL
+#define PointerStackAbort(CODE) { stack->error = CODE; return NULL; }
 #define PointerStackReturn(POINTER) stack->error = PSE_NO_ERROR; return (POINTER)
 
 /* Externally, this is only a (void *) */
@@ -63,8 +63,6 @@ typedef enum PointerStackError {
 	PSE_INVALID_INPUT,
 } PointerStackError;
 
-static void * PS_ACTION_NULL = (void *)(-1LL);
-
 #include "pointer-stack-allocation.c"
 #include "pointer-stack-extended.c"
 #include "pointer-stack-io.c"
@@ -90,8 +88,6 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
  	if (PointerStackIsLocked) PointerStackFail(PSE_STACK_LOCKED);
-
-	if ( pointer == PS_ACTION_NULL ) PointerStackFail(PSE_INVALID_INPUT);
 
 	register size_t units = (1 + stack->units);
 
