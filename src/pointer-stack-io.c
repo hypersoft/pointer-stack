@@ -65,7 +65,10 @@ PointerStackExport pointer_stack_export(PointerStack * stack, size_t from, size_
 	size_t units = (to - from) + 1;
 	void ** export = pointer_stack_allocator_lease((1 + units) * sizeof(void *));
 	size_t index = 0;
-	while (from <= to) export[index++] = stack->item[from++];
+
+	if ( ! PointerStackIsInverted ) while (from <= to) export[index++] = stack->item[from++];
+	else while (from <= to) export[index++] = stack->item[to--];
+
 	export[units] = NULL;
 	PointerStackReturn(export);
 
@@ -95,7 +98,8 @@ bool pointer_stack_import(PointerStack * stack, void * item[], size_t begin, siz
 		stack->item = pointer_stack_allocator_resize(stack->item, units * sizeof(void *));
 	}
 
-	while (new_units--) stack->item[stack->index++] = item[begin++];
+	if ( ! PointerStackIsInverted ) while (new_units--) stack->item[stack->index++] = item[begin++];
+	else while (new_units--) stack->item[stack->index++] = item[end--];
 
 	PointerStackSuccess(true);
 
