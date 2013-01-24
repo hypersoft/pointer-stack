@@ -98,7 +98,7 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 		if ( PointerStackIsLimited && units > PointerStackIsLimited ) {
 			size_t subunits = (units - PointerStackIsLimited); // rollback
 			if( subunits <= stack->buffer ) units -= subunits; // unbuffer
-			if (units > PointerStackIsLimited) PointerStackFail(PSE_OVERFLOW); //check
+			if (units > PointerStackIsLimited) PointerStackFail(PSE_STACK_LIMITED); //check
 		}
 		ThisPointerStackData = pointer_stack_allocator_resize(ThisPointerStackData, units * sizeof(void *));
 		stack->units = units;
