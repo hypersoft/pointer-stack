@@ -16,9 +16,9 @@
 
 /* control index inversion on a PointerStack */
 bool pointer_stack_invert(PointerStack * stack, bool status) {
-	if ( ! ThisPointerStack ) return false;
-	stack->inverted = status;
-	return true;
+	if ( ! ThisPointerStack ) PointerStackFail(PSE_NO_STACK);
+	PointerStackIsInverted = status;
+	PointerStackSuccess(true);
 }
 
 /* Retrieve and clear the error value associated with a PointerStack */
@@ -32,16 +32,27 @@ size_t pointer_stack_error(PointerStack * stack) {
 }
 
 bool pointer_stack_void(PointerStack * stack, size_t count) {
-	if ( ! ThisPointerStack || ! ThisPointerStackData || ! count ) return false;
-	if (count > stack->index) return false;
+
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackFail(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackFail(PSE_STACK_EMPTY);
+
+	if (count > stack->index) PointerStackFail(PSE_OVERFLOW);
+	if ( ! count ) PointerStackFail(PSE_INVALID_INPUT);
+
 	stack->index -= count;
-	return true;
+
+	PointerStackSuccess(true);
+
 }
 
 bool pointer_stack_reverse(PointerStack * stack) {
 
-	if ( ! ThisPointerStack || ! ThisPointerStackData ) return false;
-	if ( stack->index == 1 ) return true;
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
+	if ( ! ThisPointerStackData ) PointerStackFail(PSE_NO_STACK_DATA);
+	if ( ! ThisPointerStackItem ) PointerStackFail(PSE_STACK_EMPTY);
+
+	if ( stack->index == 1 ) PointerStackSuccess(true);
 
 	void * duplicate[stack->index];
 	memcpy(duplicate, stack->item, (stack->index * sizeof(void *)));
@@ -50,7 +61,8 @@ bool pointer_stack_reverse(PointerStack * stack) {
 
 	while (countdown) stack->item[countup++] = duplicate[--countdown];
 
-	return true;
+	PointerStackSuccess(true);
+
 }
 
 const char * pointer_stack_license(void) { return pointer_stack_license_string; }
