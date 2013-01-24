@@ -19,7 +19,7 @@
 
 /* Internal Macros */
 
-// test case macros, assuming stack is type of PointerStack
+// test case macros, assuming stack is type of struct -> PointerStack
 #define ThisPointerStack stack
 #define ThisPointerStackData stack->item
 #define ThisPointerStackItem stack->index
@@ -77,7 +77,7 @@ static void * PS_ACTION_NULL = (void *)(-1LL);
 /* internal function to retrieve inverted index */
 static bool invert_range_item(size_t lower, size_t upper, size_t * item) {
 
-	size_t value = *item;
+	register size_t value = *item;
 	if (lower > upper || value > upper) return false;
 	upper -= lower; value -= lower;
 	*item = ((upper - value) + lower);
@@ -93,7 +93,7 @@ bool pointer_stack_push(PointerStack * stack, void * pointer) {
 
 	if ( pointer == PS_ACTION_NULL ) PointerStackFail(PSE_INVALID_INPUT);
 
-	size_t units = (1 + stack->units);
+	register size_t units = (1 + stack->units);
 
 	if ( ! ThisPointerStackHasSlot || ! ThisPointerStackData ) { 
 		units += (stack->buffer);
@@ -153,7 +153,7 @@ void * pointer_stack_poke(PointerStack * stack, size_t index, void * pointer) {
 
 	if (index >= stack->index) PointerStackAbort(PSE_OVERFLOW);
 
-	void * result = ThisPointerStackData[index];
+	register void * result = ThisPointerStackData[index];
 	ThisPointerStackData[index] = pointer;
 
 	PointerStackReturn(result);
@@ -166,15 +166,15 @@ bool pointer_stack_pack(PointerStack * stack) {
 	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
 	if ( PointerStackIsLocked ) PointerStackFail(PSE_STACK_LOCKED);
 
-	size_t units = (stack->units - stack->index);
-	size_t buffer = (stack->buffer + 1);
+	register size_t units = (stack->units - stack->index);
+	register size_t buffer = (stack->buffer + 1);
 	
 	if (units > buffer || units < buffer) units = buffer;
 
 	if ( PointerStackIsLimited && units > PointerStackIsLimited ) {
 		size_t subunits = (units - PointerStackIsLimited); // rollback
 		if( subunits <= stack->buffer ) units -= subunits; // unbuffer
-		if (units > PointerStackIsLimited) PointerStackFail(PSE_OVERFLOW); //check
+		if (units > PointerStackIsLimited) PointerStackFail(PSE_STACK_LIMITED); //check
 	}
 
 	if (units == stack->units) PointerStackFail(PSE_INVALID_INPUT);	
