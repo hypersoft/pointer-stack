@@ -11,11 +11,12 @@
 
 /* Setup PointerStack's preallocation buffer */
 bool pointer_stack_set_buffering(PointerStack * stack, size_t size) {
-	if (ThisPointerStack) { stack->buffer = size; return true; }
-	return false;
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
+	stack->buffer = size
+	PointerStackSuccess(true);
 }
 
 size_t pointer_stack_get_buffering(PointerStack * stack) {
-	if ( ! ThisPointerStack) return 0;
-	return stack->buffer;	
+	if ( ! ThisPointerStack ) PointerStackFalse(PSE_NO_STACK);
+	PointerStackBless(stack->buffer);	
 }
